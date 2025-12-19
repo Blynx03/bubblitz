@@ -1,0 +1,32 @@
+
+// game level (this will be initialized when this function is called)
+//  ** make a switch function to determine the restrictions in each level
+// Ball value (number will show inside the ball) - requires min and max numbers (no duplicate)
+//  ** sort value in ascending or descending order (depending on the level)
+// Ball Characters
+// Ball Colors (1-14... see css for color variables  --ball-color0, --ball-color1, and so on)
+// Moving (true or false)
+//  ** if moving - set velocity (0-9)px;
+// Rotating (true or false)
+//  ** if rotating - set direction (clockwise or counterclockwise), and speed (animation time)
+
+
+// *** Game Levels ***
+// a. Level 1 - 6 balls with different sizes and color with random numbers within 1 to 20. 
+// b. Level 2 - is same as level 1 except that there are 10 balls. 
+// c. Level 3 - same as level 2 except that there will be 14 balls and numbers are within 1 to 30. 
+// d. Level 4 - 8 balls but with numbers within 1 to 50. 
+// e. Level 5 - Same as level 4 except that the number of balls is now 12. 
+// f. Level 6 - Same as Level 4 but some of the balls are moving faster. 
+// g. Level 7 - Same as level 6 except that there are 12 balls. 
+// h. Level 8 - Same as level 6 except that there are 14 balls. 
+// i. Level 9 - Same as level 7 but some of the balls go big and small. 
+// j. Level 10 - same as level 9 but there will be 14 balls. 
+// k. Level 11 - same as level 9 but some of the balls are now rotating. 
+// l. Level 12 - same as level 11 but there will be 14 balls. 
+// m. Level 13 to 18 - are levels 7 to 12 respectively except that the number are within 0 to 99. 
+// n. Level 19 - 24 - are levels 7 to 12 respectively and the number are also within 0 to 99, and this time some of the numbers inside the balls are rotating counterclockwise. 
+// o. Level 25 - 30 - are the same as levels 19 to 24 respectively but some of the balls have values that are vanishing (opacity going 0). 
+// p. levels 31 - 60 - are the same as levels 1 to 30 respectively but this time with 1 minute timer. 
+// q. levels 61 to 90 - are the same as levels 1 to 30 respectively but with 45 seconds timer. 
+// r. Levels 91 to 120 - are the same as levels 1 to 30 respectively but with 30 seconds timer. 
