@@ -2,6 +2,7 @@
   --font-primary: "Freckle Face", system-ui;
   --font-secondary: "Frijole", system-ui;
   --font-tertiary: "Rubik Glitch", system-ui;
+  --font-cleaner: "Slackey", sans-serif;
     /* other colors */
   --warning-color: #f67272;
   --accent-color: #196a85;
@@ -197,7 +198,24 @@
   width: clamp(300px, 70%, 700px);
   height: 60%;
   border-radius: 10px;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   background-color: var(--primary-color);
-  box-shadow: 0 0 30px var(--secondary-color);
+  box-shadow: 0 0 24px 20px var(--secondary-color);
+  position: relative;
+}
+
+.ball {
+  position: absolute;
+  border-radius: 50%;
+  border: 6px solid black;
+  box-shadow: 0 0 10px 2px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ball-value {
+  font-family: var(--font-cleaner);
+  font-weight: 600;
+  color: white;
 }

@@ -1,6 +1,10 @@
 export type BallCharacterType = {
+    ballId: number;
     ballValue: number;
+    xStartingPosition: number;
+    yStartingPosition: number;
     ballColor: number;
+    ballSize: number;
     
 } & MovingType & RotatingType & ChangingSizeType & VanishingValueType;
 
@@ -13,12 +17,12 @@ type RotatingType =
     | { isRotating?: false; rotate?: never };
 
 type ChangingSizeType =
-    | { isChangingSize: true; sizeChange: { minSize: number, maxSize: number }}
+    | { isChangingSize: true; sizeChange: { sizeOffset: number, sizeChangeSpeed: number }}
     | { isChangingSize?: false; sizeChange?: never };
 
 type VanishingValueType = 
-    | { vanishingValue: true; speed: { fast: boolean } }
-    | { vanishingValue?: false; speed?: never }
+    | { isVanishingValue: true; speed: { fast: number } }
+    | { isVanishingValue?: false; speed?: never }
 
 
 export type BallCharacterKey = keyof BallCharacterType;

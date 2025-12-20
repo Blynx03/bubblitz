@@ -6,7 +6,7 @@ import UserContext, { type UserContextType } from '../context/UserContext'
 import TitleCaption from '../components/TitleCaption'
 
 const MainPage = () => {
-    const { isLightTheme, setIsLightTheme } = useContext(UserContext) as UserContextType;
+    const { isLightTheme } = useContext(UserContext) as UserContextType;
     let mode = isLightTheme ? 'light-mode' : 'dark-mode';
 
     return (

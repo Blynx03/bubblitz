@@ -1,22 +1,16 @@
 import React from 'react'
-import { BALL_CHARACTER } from '../types/BallCharacter'
 import { LEVEL_CONFIG } from '../types/LevelConfig'
-import generateBallCharacters from './generateBallCharacters'
 import type { ContainerRectType } from '../types/ContainerSize'
 import getRandomValue from './getRandomValue'
+import type { BallCharacterType } from '../types/BallCharacter'
 
-const animateContainer = (gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement | null>) => {
+const animateContainer = (gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement | null>, ballsCharacter: BallCharacterType[]) => {
     let speed: number = getRandomValue(1, 8); // random speed
-    let sizeChangeSpeed: number;
     const ballArray = Array.from({length: LEVEL_CONFIG[gameLevel].numberOfBalls})
 
     if (!container) return;
 
     ballArray.forEach((_,i) => {
-        const character = generateBallCharacters(gameLevel);
-        if (character.isChangingSize === true) {
-            sizeChangeSpeed = getRandomValue(0, 8);
-        }
             
         let ballSize = getRandomValue(getRandomValue(20, 30), getRandomValue(35, 80));
         let xPosition: number = getRandomValue(0 + ballSize, container.width - ballSize);
@@ -33,7 +27,7 @@ const animateContainer = (gameLevel: number, container: ContainerRectType, conta
             }
             if (xPosition > container.x - ballSize || yPosition > container.y + container.height - ballSize) {
                 yPosition += speed;
-                
+
             }            
         }
     })

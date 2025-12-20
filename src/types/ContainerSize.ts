@@ -3,4 +3,4 @@ export type ContainerRectType = {
     height: number ,
     x: number,
     y: number
-} | null;
+};
