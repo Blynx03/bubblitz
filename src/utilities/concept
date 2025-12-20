@@ -25,7 +25,7 @@
 // k. Level 11 - same as level 9 but some of the balls are now rotating. 
 // l. Level 12 - same as level 11 but there will be 14 balls. 
 // m. Level 13 to 18 - are levels 7 to 12 respectively except that the number are within 0 to 99. 
-// n. Level 19 - 24 - are levels 7 to 12 respectively and the number are also within 0 to 99, and this time some of the numbers inside the balls are rotating counterclockwise. 
+// n. Level 19 - 24 - are levels 7 to 12 respectively and the number are also within 0 to 99, and this time numbers can be in ascending or descending order.
 // o. Level 25 - 30 - are the same as levels 19 to 24 respectively but some of the balls have values that are vanishing (opacity going 0). 
 // p. levels 31 - 60 - are the same as levels 1 to 30 respectively but this time with 1 minute timer. 
 // q. levels 61 to 90 - are the same as levels 1 to 30 respectively but with 45 seconds timer. 

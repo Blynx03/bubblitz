@@ -14,7 +14,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
 
   
     
-    return ballArray.map((_,i) => {
+    const generatedBalls = ballArray.map((_,i) => {
         const movingPart = LEVEL_CONFIG[level].moving 
             ? getTrueOrFalse()
                 ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 8)}}
@@ -54,9 +54,35 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
             ...vanishingPart
         }
         existingBallArray.push(ball);
-        animateContainer(level, container, containerRef, existingBallArray);
         return ball;
     });
+    // sort balls depending on values
+    let sortedBalls: BallCharacterType[] = [];
+    let isDescending = getTrueOrFalse();
+
+    if (LEVEL_CONFIG[level].ballValueOrder) {
+        isDescending
+        // descending
+        ? sortedBalls = [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
+        // ascending 
+        : sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
+        // descending
+    } else {
+        // ascending
+        sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
+    }
+
+    // assign z-index depending on the order
+    const finalSortedBalls = sortedBalls.map((ball, i) => {
+        if (isDescending) {
+            return { 
+            ...ball, zIndex: i }
+        } else {
+            return {
+            ...ball, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
+        }
+    });
+    return finalSortedBalls;
 }
 
 export default generateBallCharacters

@@ -13,13 +13,20 @@ const DemoArea = () => {
         setBallsCharacter(generateBallCharacters(gameLevel, container, demoContainerRef));
     }, [gameLevel, container]);
 
-    console.log('balls character = ', ballsCharacter);
-
     return (
         <div ref={demoContainerRef} className='demo-container'>
             {ballsCharacter.map((ball, i) => 
                 (
-                <div key={i} ref={el => { if (el) ballRefs.current[i] = el}} className={'ball'} style={{backgroundColor:`var(--ball-color${ball.ballColor})`, width: ball.ballSize, height: ball.ballSize, left: `${ball.xStartingPosition}px`, top: `${ball.yStartingPosition}px`}}>
+                <div 
+                    key={i} 
+                    ref={el => { if (el) ballRefs.current[i] = el}} 
+                    className={'ball'} 
+                    style={{ backgroundColor:`var(--ball-color${ball.ballColor})`, 
+                        width: ball.ballSize, 
+                        height: ball.ballSize, 
+                        left: `${ball.xStartingPosition}px`, 
+                        top: `${ball.yStartingPosition}px`, 
+                        zIndex: `${ball.zIndex}` }}>
                     <div className='ball-value' style={{fontSize: `${ball.ballSize - 70}px`}}>{ball.ballValue}</div>
                 </div>
                 )

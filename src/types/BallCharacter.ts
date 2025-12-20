@@ -3,6 +3,7 @@ export type BallCharacterType = {
     ballValue: number;
     xStartingPosition: number;
     yStartingPosition: number;
+    zIndex?: number,
     ballColor: number;
     ballSize: number;
     

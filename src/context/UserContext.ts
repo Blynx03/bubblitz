@@ -9,6 +9,8 @@ export interface UserContextType {
     ballsCharacter: BallCharacterType[];
     setBallsCharacter: Dispatch<SetStateAction<BallCharacterType[]>>;
     ballRefs: RefObject<HTMLDivElement[]>;
+    isAscending: boolean;
+    setIsAscending: Dispatch<SetStateAction<boolean>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

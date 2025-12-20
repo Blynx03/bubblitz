@@ -217,5 +217,6 @@
 .ball-value {
   font-family: var(--font-cleaner);
   font-weight: 600;
+  opacity: 1;
   color: white;
 }

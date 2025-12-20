@@ -11,13 +11,15 @@ function App() {
   const [ gameLevel, setGameLevel ] = useState<number>(0);  
   const [ ballsCharacter, setBallsCharacter ] = useState<BallCharacterType[]>([]);
   const ballRefs = useRef<HTMLDivElement[]>([]);
+  const [ isAscending, setIsAscending ] = useState(false)
 
 
   const value = {
     isLightTheme, setIsLightTheme,
     gameLevel, setGameLevel,
     ballsCharacter, setBallsCharacter,
-    ballRefs
+    ballRefs,
+    isAscending, setIsAscending
   }
 
   return (
