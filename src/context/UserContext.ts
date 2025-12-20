@@ -8,7 +8,7 @@ export interface UserContextType {
     setGameLevel: Dispatch<SetStateAction<number>>;
     ballsCharacter: BallCharacterType[];
     setBallsCharacter: Dispatch<SetStateAction<BallCharacterType[]>>;
-    ballRefs: RefObject<HTMLDivElement[]>;
+    ballRefs: RefObject<HTMLElement[]>;
     isAscending: boolean;
     setIsAscending: Dispatch<SetStateAction<boolean>>;
 }

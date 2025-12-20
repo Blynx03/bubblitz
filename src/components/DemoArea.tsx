@@ -2,32 +2,39 @@ import { useContext, useEffect, useRef } from 'react'
 import useContainerSize from '../utilities/useContainerSize';
 import UserContext, { type UserContextType } from '../context/UserContext';
 import generateBallCharacters from '../utilities/generateBallCharacters';
+import animateContainer from '../utilities/animateContainer';
+import type { BallCharacterType } from '../types/BallCharacter';
 
 const DemoArea = () => {
-    const demoContainerRef = useRef<HTMLDivElement | null>(null);
-    const container = useContainerSize(demoContainerRef);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const container = useContainerSize(containerRef);
     const { gameLevel, ballsCharacter, setBallsCharacter, ballRefs } = useContext(UserContext) as UserContextType;
 
     useEffect(() => {
-        if (!container || !demoContainerRef) return;
-        setBallsCharacter(generateBallCharacters(gameLevel, container, demoContainerRef));
+        if (!container || !containerRef) return;
+
+        const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, containerRef);
+        animateContainer({gameLevel, container, containerRef, generatedBalls, ballRefs});
+        setBallsCharacter(generatedBalls);
     }, [gameLevel, container]);
 
     return (
-        <div ref={demoContainerRef} className='demo-container'>
+        <div ref={containerRef} className='demo-container'>
             {ballsCharacter.map((ball, i) => 
                 (
                 <div 
-                    key={i} 
-                    ref={el => { if (el) ballRefs.current[i] = el}} 
+                    key={ball.ballId} 
+                    ref={el => { if (el) ballRefs.current[ball.ballId] = el}} 
                     className={'ball'} 
                     style={{ backgroundColor:`var(--ball-color${ball.ballColor})`, 
                         width: ball.ballSize, 
-                        height: ball.ballSize, 
+                        height: ball.ballSize,
+                        fontSize: `${ball.ballSize}px`, 
                         left: `${ball.xStartingPosition}px`, 
                         top: `${ball.yStartingPosition}px`, 
                         zIndex: `${ball.zIndex}` }}>
-                    <div className='ball-value' style={{fontSize: `${ball.ballSize - 70}px`}}>{ball.ballValue}</div>
+                    <div className='ball-value'>{ball.ballValue}</div>
+                    {/* <div className='ball-value' style={{fontSize: `${ball.ballSize - 70}px`}}>{ball.ballValue}</div> */}
                 </div>
                 )
             )}

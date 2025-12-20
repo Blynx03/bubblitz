@@ -23,6 +23,27 @@
   --ball-color12: #B9B28A;
   --ball-color13: #C1BAA1;
   --ball-color14: #A6AEBF;
+  --ball-color15: #F2F1ED;
+  --ball-color16: #C6E2E7;
+  --ball-color17: #FFCCE1;
+  --ball-color18: #F2EBCC;
+  --ball-color19: #FFC697;
+  --ball-color20: #CBD3AD;
+  --ball-color21: #DDC3E3;
+  --ball-color22: #C8CEEE;
+  --ball-color23: #F2D894;
+  --ball-color24: #F9C0AF;
+  --ball-color25: #E9BCEC;
+  --ball-color26: #F9D5C9;
+  --ball-color27: #C4DADE;
+  --ball-color28: #B9D9D5;
+  --ball-color29: #DDE8ED;
+  --ball-color30: #9BABBE;
+  --ball-color31: #D0D9E2;
+  --ball-color32: #D9C8BF;
+  --ball-color33: #C3C2D5;
+  --ball-color34: #859E91;
+  --ball-color35: #ACC791;
 }
 
 .light-mode {
@@ -215,8 +236,11 @@
 }
 
 .ball-value {
+  line-height: 1;
   font-family: var(--font-cleaner);
   font-weight: 600;
+  font-size: 0.55em;
   opacity: 1;
+  white-space: nowrap;
   color: white;
 }

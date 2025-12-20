@@ -12,12 +12,13 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
 
     const existingBallArray: BallCharacterType[] = [];
 
-  
+    const xDir: 'left' | 'right' = getTrueOrFalse() ? 'right' : 'left';
+    const yDir: 'up' | 'down' = getTrueOrFalse() ? 'up' : 'down';
     
     const generatedBalls = ballArray.map((_,i) => {
         const movingPart = LEVEL_CONFIG[level].moving 
             ? getTrueOrFalse()
-                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 8)}}
+                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 8), xDirection: xDir, yDirection: yDir}}
                 : { isMoving: false as const }
             : { isMoving: false as const }
         
@@ -46,7 +47,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
             ballValue: getRandomValue(LEVEL_CONFIG[level].minValue, LEVEL_CONFIG[level].maxValue, 'ballValue', existingBallArray),     
             xStartingPosition: getRandomValue(0, container.width - ballSize, 'xStartingPosition', existingBallArray),
             yStartingPosition: getRandomValue(0, container.height - ballSize, 'yStartingPosition', existingBallArray),
-            ballColor: getRandomValue(0, 14, 'ballColor', existingBallArray),
+            ballColor: getRandomValue(0, 35, 'ballColor', existingBallArray),
             ballSize,
             ...movingPart,
             ...rotatingPart,
@@ -76,10 +77,10 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
     const finalSortedBalls = sortedBalls.map((ball, i) => {
         if (isDescending) {
             return { 
-            ...ball, zIndex: i }
+            ...ball, ballId: i, zIndex: i }
         } else {
             return {
-            ...ball, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
+            ...ball, ballId: LEVEL_CONFIG[level].numberOfBalls - i, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
         }
     });
     return finalSortedBalls;

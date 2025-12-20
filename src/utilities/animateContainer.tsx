@@ -1,42 +1,68 @@
 import React from 'react'
-import { LEVEL_CONFIG } from '../types/LevelConfig'
 import type { ContainerRectType } from '../types/ContainerSize'
 import getRandomValue from './getRandomValue'
 import type { BallCharacterType } from '../types/BallCharacter'
 
-const animateContainer = (gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement | null>, ballsCharacter: BallCharacterType[]) => {
+type animateType = {
+    gameLevel: number,
+    container: ContainerRectType,
+    containerRef: React.RefObject<HTMLDivElement | null>,
+    generatedBalls: BallCharacterType[],
+    ballRefs: React.RefObject<HTMLElement[]>
+}
+
+// gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement>, ballsCharacter: BallCharacterType[]
+
+const animateContainer = ({gameLevel, container, containerRef, generatedBalls, ballRefs }: animateType) => {
     let speed: number = getRandomValue(1, 8); // random speed
-    const ballArray = Array.from({length: LEVEL_CONFIG[gameLevel].numberOfBalls})
+    let rafId: number;
 
-    if (!container) return;
+    const animate = () => {
 
-    ballArray.forEach((_,i) => {
-            
-        let ballSize = getRandomValue(getRandomValue(20, 30), getRandomValue(35, 80));
-        let xPosition: number = getRandomValue(0 + ballSize, container.width - ballSize);
-        let yPosition: number = getRandomValue(0 + ballSize, container.height - ballSize);
-        
-        const animate = () => {
-            xPosition += speed;
-            yPosition += speed;
+        generatedBalls.forEach((ball, i) => {
 
-            if (xPosition < container.x + ballSize && yPosition < container.y + container.height + ballSize) {
-                xPosition += speed;
-                if (!containerRef.current) return;
-                    containerRef.current.style.right = `${xPosition}px`
+            if (!ball.isMoving) return;
+
+            if (ball.move.xDirection === 'right') {
+                ball.xStartingPosition += speed;
+            } else {
+                ball.xStartingPosition -= speed;
             }
-            if (xPosition > container.x - ballSize || yPosition > container.y + container.height - ballSize) {
-                yPosition += speed;
 
-            }            
-        }
-    })
+            if (ball.xStartingPosition >= container.x + container.width - ball.ballSize) {
+                ball.move.xDirection = 'left';
+            }
 
-    
+            if (ball.xStartingPosition <= container.x) {
+                ball.move.xDirection = 'right';
+            }
 
-  return (
-    <div>animateContainer</div>
-  )
+            // y-axis
+            if (ball.move.yDirection === 'down') {
+                ball.yStartingPosition += speed;
+            } else {
+                ball.yStartingPosition -= speed;
+            }
+
+            if (ball.yStartingPosition >= container.y + container.height - ball.ballSize) {
+                ball.move.yDirection = 'up';
+            }
+
+            if (ball.yStartingPosition <= container.y) {
+                ball.move.yDirection === 'down';
+            }
+            
+            const el = ballRefs.current[ball.ballId];
+            if (!el) return;
+
+                el.style.left = `${ball.xStartingPosition}px`
+                el.style.top = `${ball.yStartingPosition}px`
+            
+        }); 
+        rafId = requestAnimationFrame(animate);              
+    }
+    rafId = requestAnimationFrame(animate);
+
 }
 
 export default animateContainer

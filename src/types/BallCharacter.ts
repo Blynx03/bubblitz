@@ -1,16 +1,15 @@
 export type BallCharacterType = {
-    ballId: number;
-    ballValue: number;
-    xStartingPosition: number;
-    yStartingPosition: number;
+    ballId: number,
+    ballValue: number,
+    xStartingPosition: number,
+    yStartingPosition: number,
     zIndex?: number,
-    ballColor: number;
-    ballSize: number;
-    
+    ballColor: number,
+    ballSize: number
 } & MovingType & RotatingType & ChangingSizeType & VanishingValueType;
 
 type MovingType = 
-    | { isMoving: true; move: { moveSpeed: number }}
+    | { isMoving: true; move: { moveSpeed: number, xDirection: 'left' | 'right', yDirection: 'up' | 'down' }}
     | { isMoving?: false; move?: never };
 
 type RotatingType = 
