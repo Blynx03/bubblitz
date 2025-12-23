@@ -14,55 +14,58 @@ type animateType = {
 // gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement>, ballsCharacter: BallCharacterType[]
 
 const animateContainer = ({gameLevel, container, containerRef, generatedBalls, ballRefs }: animateType) => {
-    let speed: number = getRandomValue(1, 8); // random speed
     let rafId: number;
 
     const animate = () => {
 
         generatedBalls.forEach((ball, i) => {
 
-            if (!ball.isMoving) return;
+            // for moving animation
+            // if (!ball.isMoving) return;
 
             if (ball.move.xDirection === 'right') {
-                ball.xStartingPosition += speed;
+                ball.xStartingPosition += ball.move.moveSpeed;
             } else {
-                ball.xStartingPosition -= speed;
+                ball.xStartingPosition -= ball.move.moveSpeed;
             }
 
-            if (ball.xStartingPosition >= container.x + container.width - ball.ballSize) {
+            if (ball.xStartingPosition >= container.width - ball.ballSize) {
+                ball.xStartingPosition = container.width - ball.ballSize
                 ball.move.xDirection = 'left';
             }
 
-            if (ball.xStartingPosition <= container.x) {
+            if (ball.xStartingPosition <= 0) {
+                ball.xStartingPosition = 0;
                 ball.move.xDirection = 'right';
             }
 
             // y-axis
             if (ball.move.yDirection === 'down') {
-                ball.yStartingPosition += speed;
+                ball.yStartingPosition += ball.move.moveSpeed;
             } else {
-                ball.yStartingPosition -= speed;
+                ball.yStartingPosition -= ball.move.moveSpeed;
             }
 
-            if (ball.yStartingPosition >= container.y + container.height - ball.ballSize) {
+            if (ball.yStartingPosition >= container.height - ball.ballSize) {
+                ball.yStartingPosition = container.height - ball.ballSize;
                 ball.move.yDirection = 'up';
             }
 
-            if (ball.yStartingPosition <= container.y) {
-                ball.move.yDirection === 'down';
+            if (ball.yStartingPosition <= 0) {
+                ball.yStartingPosition = 0;
+                ball.move.yDirection = 'down';
             }
-            
-            const el = ballRefs.current[ball.ballId];
-            if (!el) return;
 
-                el.style.left = `${ball.xStartingPosition}px`
-                el.style.top = `${ball.yStartingPosition}px`
-            
+            const el = ballRefs.current[ball.ballId];
+
+            if (!el) return;
+            el.style.left = `${ball.xStartingPosition}px`;
+            el.style.top = `${ball.yStartingPosition}px`;
         }); 
+
         rafId = requestAnimationFrame(animate);              
     }
     rafId = requestAnimationFrame(animate);
-
 }
 
 export default animateContainer

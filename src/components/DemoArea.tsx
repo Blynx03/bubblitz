@@ -18,7 +18,12 @@ const DemoArea = () => {
         setBallsCharacter(generatedBalls);
     }, [gameLevel, container]);
 
-    return (
+    const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
+        return (`${rotateClockwise ? 'rotate-cw' : 'rotate-ccw'} linear 3s infinite 
+                ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
+        )}      
+
+    return ( 
         <div ref={containerRef} className='demo-container'>
             {ballsCharacter.map((ball, i) => 
                 (
@@ -32,8 +37,15 @@ const DemoArea = () => {
                         fontSize: `${ball.ballSize}px`, 
                         left: `${ball.xStartingPosition}px`, 
                         top: `${ball.yStartingPosition}px`, 
-                        zIndex: `${ball.zIndex}` }}>
-                    <div className='ball-value'>{ball.ballValue}</div>
+                        zIndex: `${ball.zIndex}`,
+                        animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize ) }}>
+
+                    <div 
+                        className='ball-value' 
+                        style={{
+                            animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
+                        }}
+                    >{ball.ballValue}</div>
                     {/* <div className='ball-value' style={{fontSize: `${ball.ballSize - 70}px`}}>{ball.ballValue}</div> */}
                 </div>
                 )

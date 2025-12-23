@@ -1,5 +1,5 @@
 import { useContext, type RefObject } from 'react';
-import type { BallCharacterType } from '../types/BallCharacter';
+import type { BallCharacterType, ChangingSizeType, MovingType, RotatingType, VanishingValueType } from '../types/BallCharacter';
 import { LEVEL_CONFIG } from '../types/LevelConfig';
 import getRandomValue from './getRandomValue';
 import getTrueOrFalse from './getTrueOrFalse';
@@ -15,28 +15,41 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
     const xDir: 'left' | 'right' = getTrueOrFalse() ? 'right' : 'left';
     const yDir: 'up' | 'down' = getTrueOrFalse() ? 'up' : 'down';
     
+    const movingQ: boolean[] = [];
+    const rotatingQ: boolean[] = [];
+    const changingSizeQ: boolean[] = [];
+    const vanishingQ: boolean[] = [];
+
+    ballArray.forEach((_,i) => {
+        movingQ[i] = getTrueOrFalse();
+        rotatingQ[i] = getTrueOrFalse();
+        changingSizeQ[i] = getTrueOrFalse();
+        vanishingQ[i] = getTrueOrFalse();
+    })
+
+    const trial = true;
     const generatedBalls = ballArray.map((_,i) => {
-        const movingPart = LEVEL_CONFIG[level].moving 
-            ? getTrueOrFalse()
-                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 8), xDirection: xDir, yDirection: yDir}}
-                : { isMoving: false as const }
-            : { isMoving: false as const }
+        const movingPart: MovingType = LEVEL_CONFIG[level].moving 
+            ? movingQ[i]
+                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 2), xDirection: xDir, yDirection: yDir}}
+                : { isMoving: false as const, move: { moveSpeed: 0, xDirection: xDir, yDirection: yDir} }
+            : { isMoving: false as const, move: { moveSpeed: 0, xDirection: xDir, yDirection: yDir } }
         
-        const rotatingPart = LEVEL_CONFIG[level].rotating
-            ? getTrueOrFalse()
+        const rotatingPart: RotatingType = LEVEL_CONFIG[level].rotating
+            ? rotatingQ[i]
                 ? { isRotating: true as const, rotate: { rotateClockwise: getTrueOrFalse() }}
                 : { isRotating: false as const }
             : { isRotating: false as const }
 
-        const changingSizePart = LEVEL_CONFIG[level].changingSize 
-            ? getTrueOrFalse()
+        const changingSizePart: ChangingSizeType = LEVEL_CONFIG[level].changingSize 
+            ? changingSizeQ[i]
                 ? { isChangingSize: true as const, sizeChange: { sizeOffset: getRandomValue(20, 30), sizeChangeSpeed: getRandomValue(0, 8) }}
                 : { isChangingSize: false as const }
             : { isChangingSize: false as const }
 
-        const vanishingPart = LEVEL_CONFIG[level].vanishingValue
-            ? getTrueOrFalse()
-                ? { isVanishingValue: true as const, speed: { fast: getRandomValue(0, 8) }}
+        const vanishingPart: VanishingValueType = LEVEL_CONFIG[level].vanishingValue
+            ? vanishingQ[i]
+                ? { isVanishingValue: true as const, vanishingSpeed: getRandomValue(0, 8) }
                 : { isVanishingValue: false as const }  
             : { isVanishingValue: false as const }  
         

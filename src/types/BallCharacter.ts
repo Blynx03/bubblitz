@@ -8,21 +8,21 @@ export type BallCharacterType = {
     ballSize: number
 } & MovingType & RotatingType & ChangingSizeType & VanishingValueType;
 
-type MovingType = 
+export type MovingType = 
     | { isMoving: true; move: { moveSpeed: number, xDirection: 'left' | 'right', yDirection: 'up' | 'down' }}
-    | { isMoving?: false; move?: never };
+    | { isMoving?: false; move: { moveSpeed: number, xDirection: 'left' | 'right', yDirection: 'up' | 'down' }};
 
-type RotatingType = 
+export type RotatingType = 
     | { isRotating: true; rotate: { rotateClockwise: boolean }}
-    | { isRotating?: false; rotate?: never };
+    | { isRotating?: false; rotate?: never }
 
-type ChangingSizeType =
+export type ChangingSizeType =
     | { isChangingSize: true; sizeChange: { sizeOffset: number, sizeChangeSpeed: number }}
     | { isChangingSize?: false; sizeChange?: never };
 
-type VanishingValueType = 
-    | { isVanishingValue: true; speed: { fast: number } }
-    | { isVanishingValue?: false; speed?: never }
+export type VanishingValueType = 
+    | { isVanishingValue: true; vanishingSpeed: number }
+    | { isVanishingValue?: false; vanishingSpeed?: never }
 
 
 export type BallCharacterKey = keyof BallCharacterType;
