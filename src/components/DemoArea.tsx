@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from 'react'
-import useContainerSize from '../utilities/useContainerSize';
+import useContainerSize from '../hooks/useContainerSize';
 import UserContext, { type UserContextType } from '../context/UserContext';
 import generateBallCharacters from '../utilities/generateBallCharacters';
 import animateContainer from '../utilities/animateContainer';

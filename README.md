@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# 🎮 Bubblitz — A Reflex & Focus Number Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bubblitz is a fast-paced, browser-based game built with modern web technologies.  
+The game challenges players to identify and pop numbered balls in the correct order while adapting to increasing visual and motion-based complexity.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🧠 Game Concept
 
-## React Compiler
+At each level, players are presented with a set of randomly generated balls, each containing a numerical value.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+The objective is to pop the balls in the correct sequence:
+- Ascending (lowest to highest), or
+- Descending (highest to lowest)
 
-## Expanding the ESLint configuration
+As levels progress, balls gain additional behaviors that increase difficulty and cognitive load.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Starting at Level 30, the game introduces timed gameplay and a limited-lives system.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Core Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Randomized ball generation
+- Ascending / descending order challenges
+- Progressive difficulty scaling
+- Multiple ball behaviors:
+  - Movement (horizontal / vertical)
+  - Rotation (clockwise / counterclockwise)
+  - Value disappearance & reappearance
+  - Size changes (shrink & restore)
+- Timed levels (Level 30+)
+- Three-life system
+- Smooth animations using `requestAnimationFrame`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Technologies Used
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **HTML5** — Structure and layout
+- **CSS3** — Styling, animations, and transitions
+- **JavaScript (ES6+)** — Core game logic
+- **TypeScript** — Type safety and maintainability
+- **React** — Component-based UI architecture
+- **React Hooks** — State and lifecycle management
+- **requestAnimationFrame** — Smooth, performant animations
+
+---
+
+## 🚀 Project Goals
+
+- Practice advanced animation logic
+- Explore real-time motion handling
+- Apply TypeScript discriminated unions
+- Build a scalable game architecture
+- Create an engaging and progressively challenging user experience
+
+---
+
+## 📦 Future Enhancements
+
+- Sound effects and background music
+- Difficulty presets
+- Mobile gesture support
+- Leaderboards and scoring
+- Accessibility options
+
+---
+
+## 📄 License
+
+This project is for educational and personal use.
