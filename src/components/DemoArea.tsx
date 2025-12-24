@@ -4,17 +4,17 @@ import UserContext, { type UserContextType } from '../context/UserContext';
 import generateBallCharacters from '../utilities/generateBallCharacters';
 import animateContainer from '../utilities/animateContainer';
 import type { BallCharacterType } from '../types/BallCharacter';
+import getTrueOrFalse from '../utilities/getTrueOrFalse';
 
 const DemoArea = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const container = useContainerSize(containerRef);
-    const { gameLevel, ballsCharacter, setBallsCharacter, ballRefs } = useContext(UserContext) as UserContextType;
+    const { gameLevel, setIsAscending, ballsCharacter, setBallsCharacter, ballRefs } = useContext(UserContext) as UserContextType;
 
     useEffect(() => {
         if (!container || !containerRef) return;
-
-        const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, containerRef);
-        animateContainer({gameLevel, container, containerRef, generatedBalls, ballRefs});
+        const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
+        animateContainer({container, generatedBalls, ballRefs});
         setBallsCharacter(generatedBalls);
     }, [gameLevel, container]);
 
@@ -31,14 +31,16 @@ const DemoArea = () => {
                     key={ball.ballId} 
                     ref={el => { if (el) ballRefs.current[ball.ballId] = el}} 
                     className={'ball'} 
-                    style={{ backgroundColor:`var(--ball-color${ball.ballColor})`, 
+                    style={{ 
+                        backgroundColor:`var(--ball-color${ball.ballColor})`, 
                         width: ball.ballSize, 
                         height: ball.ballSize,
                         fontSize: `${ball.ballSize}px`, 
                         left: `${ball.xStartingPosition}px`, 
                         top: `${ball.yStartingPosition}px`, 
                         zIndex: `${ball.zIndex}`,
-                        animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize ) }}>
+                        animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize ) 
+                    }}>
 
                     <div 
                         className='ball-value' 

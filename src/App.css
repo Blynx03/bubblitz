@@ -127,7 +127,7 @@
   position: fixed;
   top: 1%;
   /* right: 20%; */
-  right: clamp(10px, 5%, 300px);
+  right: clamp(10px, 20%, 500px);
   border: 3px solid var(--accent-color);
   border-radius: 20px;
   background-color: var(--secondary-color);
@@ -149,7 +149,7 @@
   height: 100%;
   width: 50%;
   border-radius: 50%;
-  background-color: var(--bg-color);
+  background-color: var(--warning-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -285,6 +285,13 @@
   height: 46px;
   font-size: clamp(0.8em, 5vw, 2rem);
   background-color: var(--primary-color);
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  cursor: pointer;
+  transform: scale(0.95);
+  color: var(--bg-color);
 }
 
 /* how to play page */
@@ -382,3 +389,37 @@ header {
   padding: clamp(4px, 5vh, 8px) clamp(16px, 2.5vw, 24px);
   font-size: clamp(0.9rem, 5vw, 2rem);
 }
+
+/* play-page */
+.play-page-container {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: black;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 20px solid red;
+}
+
+.play-page-instruction-level-container {
+  height: 15%;
+  width: 100vw;
+  border: 1px solid red;
+}
+
+/* .play-area-container {
+  margin-top: 20px;
+  width: clamp(300px, 70%, 700px);
+  height: 60%;
+  border-radius: 10px;
+  /* border: 2px solid black; 
+  background-color: var(--primary-color);
+  box-shadow: 0 0 30px 10px var(--secondary-color);
+  position: relative;
+} */
+

@@ -1,12 +1,11 @@
-import { useContext, type RefObject } from 'react';
+import { type Dispatch, type RefObject, type SetStateAction } from 'react';
 import type { BallCharacterType, ChangingSizeType, MovingType, RotatingType, VanishingValueType } from '../types/BallCharacter';
 import { LEVEL_CONFIG } from '../types/LevelConfig';
 import getRandomValue from './getRandomValue';
 import getTrueOrFalse from './getTrueOrFalse';
 import type { ContainerRectType } from '../types/ContainerSize';
-import animateContainer from './animateContainer';
 
-const generateBallCharacters = (level: number, container: ContainerRectType, containerRef: RefObject<HTMLDivElement | null>): BallCharacterType[] => {
+const generateBallCharacters = (level: number, container: ContainerRectType, setIsAscending: Dispatch<SetStateAction<boolean>>): BallCharacterType[] => {
     const ballArray = Array.from({length: LEVEL_CONFIG[level].numberOfBalls});
     // const { setBallsCharacter } = useContext(UserContext) as UserContextType;
 
@@ -27,7 +26,6 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
         vanishingQ[i] = getTrueOrFalse();
     })
 
-    const trial = true;
     const generatedBalls = ballArray.map((_,i) => {
         const movingPart: MovingType = LEVEL_CONFIG[level].moving 
             ? movingQ[i]
@@ -72,15 +70,16 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
     });
     // sort balls depending on values
     let sortedBalls: BallCharacterType[] = [];
-    let isDescending = getTrueOrFalse();
+    let valueOrder: boolean;
 
     if (LEVEL_CONFIG[level].ballValueOrder) {
-        isDescending
-        // descending
-        ? sortedBalls = [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
-        // ascending 
-        : sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
-        // descending
+        valueOrder = getTrueOrFalse();
+        setIsAscending(valueOrder);
+        valueOrder
+        // ascending
+        ? sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
+        // descending 
+        : sortedBalls = [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
     } else {
         // ascending
         sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
@@ -88,7 +87,8 @@ const generateBallCharacters = (level: number, container: ContainerRectType, con
 
     // assign z-index depending on the order
     const finalSortedBalls = sortedBalls.map((ball, i) => {
-        if (isDescending) {
+        console.log('value order = ', valueOrder)
+        if (valueOrder) {
             return { 
             ...ball, ballId: i, zIndex: i }
         } else {

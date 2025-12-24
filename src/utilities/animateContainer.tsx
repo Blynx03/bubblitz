@@ -1,19 +1,18 @@
 import React from 'react'
 import type { ContainerRectType } from '../types/ContainerSize'
-import getRandomValue from './getRandomValue'
 import type { BallCharacterType } from '../types/BallCharacter'
 
 type animateType = {
-    gameLevel: number,
+    gameLevel?: number,
     container: ContainerRectType,
-    containerRef: React.RefObject<HTMLDivElement | null>,
+    containerRef?: React.RefObject<HTMLDivElement | null>,
     generatedBalls: BallCharacterType[],
     ballRefs: React.RefObject<HTMLElement[]>
 }
 
 // gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement>, ballsCharacter: BallCharacterType[]
 
-const animateContainer = ({gameLevel, container, containerRef, generatedBalls, ballRefs }: animateType) => {
+const animateContainer = ({container, generatedBalls, ballRefs }: animateType) => {
     let rafId: number;
 
     const animate = () => {

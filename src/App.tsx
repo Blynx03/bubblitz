@@ -12,7 +12,7 @@ function App() {
   const [ gameLevel, setGameLevel ] = useState<number>(0);  
   const [ ballsCharacter, setBallsCharacter ] = useState<BallCharacterType[]>([]);
   const ballRefs = useRef<HTMLDivElement[]>([]);
-  const [ isAscending, setIsAscending ] = useState(false)
+  const [ isAscending, setIsAscending ] = useState(true);
 
 
   const value = {

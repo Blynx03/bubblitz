@@ -10,7 +10,7 @@ const ThemeMode = () => {
         setIsLightTheme(!isLightTheme);
         (themeRef.current)
             if (isLightTheme) {
-                themeRef.current!.style.animation = `slide-right 0.1s forwards`;
+                themeRef.current!.style.animation = `slide-right linear 0.1s forwards`;
             } else {
                 themeRef.current!.style.animation = `slide-left linear 0.1s forwards`;
             }

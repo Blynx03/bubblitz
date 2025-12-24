@@ -1,15 +1,13 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+type ButtonType = {
+    btnClass: string;
+    btnText: string;
+    onClick?: () => void;
+}
 
-const Button = (btnClass: string, btnText: string, btnPage: string) => {
-    const nav = useNavigate();
-
-    const handleClick = () => {
-        nav(`/${btnPage}`)
-    }
+const Button = ({btnClass, btnText, onClick}: ButtonType) => {
 
     return (
-        <div className={btnClass} onClick={() => handleClick()}>{btnText}</div>
+        <button className={btnClass} onClick={onClick}>{btnText}</button>
     )
 }
 

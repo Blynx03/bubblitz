@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 
 const HowToPlayPage = () => {
-    const { isLightTheme, setGameLevel } = useContext(UserContext) as UserContextType;
+    const { isLightTheme, setGameLevel, setBallsCharacter } = useContext(UserContext) as UserContextType;
     const mode = isLightTheme ? 'light-mode' : 'dark-mode';
     const nav = useNavigate();
 
     function handleClick(page:string) {
         if (page === 'play') {
             setGameLevel(1);
+            setBallsCharacter([]); // reset values
         }
         nav(`/${page}`);
     }
@@ -107,9 +108,8 @@ const HowToPlayPage = () => {
                 </section>
             </div>
             <div className='how-to-play__btn-container'>
-                <button className='how-to-play-main-page-btn how-to-play-btns btn' onClick={() => handleClick('')}>Main Page</button>
-                <button className='how-to-play-play-btn how-to-play-btns btn' onClick={() => handleClick('play')}>Let's Play!</button>
-                {/* <Button btnClass='how-to-play-play-btn how-to-play-btns btn' btnText={`Let's play!`} btnPage='play' /> */}
+                <Button btnClass='how-to-play-main-page-btn how-to-play-btns btn' btnText='Main Page' onClick={() => handleClick('')} />
+                <Button btnClass='how-to-play-play-btn how-to-play-btns btn' btnText={`Let's play!`} onClick={() => handleClick('play')}  />
             </div>
         </section>
     
