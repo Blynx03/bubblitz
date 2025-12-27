@@ -4,7 +4,6 @@ import UserContext, { type UserContextType } from '../context/UserContext';
 import generateBallCharacters from '../utilities/generateBallCharacters';
 import animateContainer from '../utilities/animateContainer';
 import type { BallCharacterType } from '../types/BallCharacter';
-import getTrueOrFalse from '../utilities/getTrueOrFalse';
 
 const DemoArea = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -14,8 +13,8 @@ const DemoArea = () => {
     useEffect(() => {
         if (!container || !containerRef) return;
         const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
-        animateContainer({container, generatedBalls, ballRefs});
         setBallsCharacter(generatedBalls);
+        animateContainer({container, generatedBalls, ballRefs});
     }, [gameLevel, container]);
 
     const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
@@ -43,7 +42,7 @@ const DemoArea = () => {
                     }}>
 
                     <div 
-                        className='ball-value' 
+                        className={`ball-value ${ball.ballValue === 6 ? 'six' : ''}`}
                         style={{
                             animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                         }}

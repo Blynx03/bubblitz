@@ -20,11 +20,19 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
     const vanishingQ: boolean[] = [];
 
     ballArray.forEach((_,i) => {
-        movingQ[i] = getTrueOrFalse();
-        rotatingQ[i] = getTrueOrFalse();
-        changingSizeQ[i] = getTrueOrFalse();
-        vanishingQ[i] = getTrueOrFalse();
-    })
+        LEVEL_CONFIG[level].moving === undefined 
+            ? movingQ[i] = false
+            : movingQ[i] = getTrueOrFalse() 
+        LEVEL_CONFIG[level].rotating === undefined
+            ? rotatingQ[i] = false 
+            : rotatingQ[i] = getTrueOrFalse()
+        LEVEL_CONFIG[level].changingSize === undefined
+            ? changingSizeQ[i] = false
+            : changingSizeQ[i] = getTrueOrFalse()
+        LEVEL_CONFIG[level].vanishingValue === undefined
+            ? vanishingQ[i] = false
+            : vanishingQ[i] = getTrueOrFalse()
+    });
 
     const generatedBalls = ballArray.map((_,i) => {
         const movingPart: MovingType = LEVEL_CONFIG[level].moving 
@@ -87,7 +95,6 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
 
     // assign z-index depending on the order
     const finalSortedBalls = sortedBalls.map((ball, i) => {
-        console.log('value order = ', valueOrder)
         if (valueOrder) {
             return { 
             ...ball, ballId: i, zIndex: i }

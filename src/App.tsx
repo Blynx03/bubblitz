@@ -11,7 +11,7 @@ function App() {
   const [ isLightTheme, setIsLightTheme ] = useState(true);
   const [ gameLevel, setGameLevel ] = useState<number>(0);  
   const [ ballsCharacter, setBallsCharacter ] = useState<BallCharacterType[]>([]);
-  const ballRefs = useRef<HTMLDivElement[]>([]);
+  let ballRefs = useRef<HTMLElement[]>([]);
   const [ isAscending, setIsAscending ] = useState(true);
 
 
