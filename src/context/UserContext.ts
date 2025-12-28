@@ -11,6 +11,8 @@ export interface UserContextType {
     ballRefs: RefObject<HTMLElement[]>;
     isAscending: boolean;
     setIsAscending: Dispatch<SetStateAction<boolean>>;
+    playKey: number;
+    setPlayKey: Dispatch<SetStateAction<number>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

@@ -6,6 +6,7 @@ import UserContext, { type UserContextType } from '../context/UserContext'
 import TitleCaption from '../components/TitleCaption'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
+import ThemeMode from '../components/ThemeMode'
 
 const MainPage = () => {
     const { isLightTheme, setGameLevel, setBallsCharacter } = useContext(UserContext) as UserContextType;
@@ -23,6 +24,7 @@ const MainPage = () => {
 
     return (
         <div className={`main-page-container ${mode}`}>
+            <ThemeMode />
             <Title />
             <TitleCaption />
             <DemoArea />

@@ -42,7 +42,7 @@ const DemoArea = () => {
                     }}>
 
                     <div 
-                        className={`ball-value ${ball.ballValue === 6 ? 'six' : ''}`}
+                        className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 ? 'six' : ''}`}
                         style={{
                             animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                         }}

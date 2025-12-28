@@ -30,10 +30,10 @@ export const LEVEL_CONFIG: Record<number, LevelConfig> = {
     16: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, changingSize: true },
     17: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true },
     18: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true },
-    19: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, ballValueOrder: true }, // some balls are rotating counterclockwise
-    20: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, ballValueOrder: true }, // some balls are rotating counterclockwise
-    21: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, changingSize: true, ballValueOrder: true }, // some balls are rotating counterclockwise
-    22: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, changingSize: true, ballValueOrder: true }, // some balls are rotating counterclockwise
+    19: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, ballValueOrder: true }, // ball values are now either ascending or descending
+    20: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, ballValueOrder: true }, // ball values are now either ascending or descending
+    21: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, changingSize: true, ballValueOrder: true }, 
+    22: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, changingSize: true, ballValueOrder: true }, 
     23: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true, ballValueOrder: true }, // some balls are rotating counterclockwise
     24: { numberOfBalls: 14, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true, ballValueOrder: true }, // some balls are rotating counterclockwise    
     25: { numberOfBalls: 12, minValue: 1, maxValue: 99, moving: true, vanishingValue: true, ballValueOrder: true },

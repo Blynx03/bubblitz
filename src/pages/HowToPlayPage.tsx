@@ -27,7 +27,7 @@ const HowToPlayPage = () => {
             <header className="how-to-play__header-container">
                 <h1 className="how-to-play__title">How to Play</h1>
                 <p className="how-to-play__subtitle">
-                Pop the balls in the correct order before time runs out.
+                Pop, think fast, and survive the Bubblitz!
                 </p>
             </header>
 

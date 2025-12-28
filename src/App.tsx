@@ -13,6 +13,7 @@ function App() {
   const [ ballsCharacter, setBallsCharacter ] = useState<BallCharacterType[]>([]);
   let ballRefs = useRef<HTMLElement[]>([]);
   const [ isAscending, setIsAscending ] = useState(true);
+  const [ playKey, setPlayKey ] = useState(0);
 
 
   const value = {
@@ -20,7 +21,8 @@ function App() {
     gameLevel, setGameLevel,
     ballsCharacter, setBallsCharacter,
     ballRefs,
-    isAscending, setIsAscending
+    isAscending, setIsAscending,
+    playKey, setPlayKey
   }
 
   return (
@@ -28,7 +30,7 @@ function App() {
       <UserContext.Provider value={value}>
         <Routes >
           <Route index element={<MainPage/>} />
-          <Route path='/play' element={<PlayPage />} />
+          <Route path='/play' element={<PlayPage key={playKey}/>} />
           <Route path='/how-to-play' element={<HowToPlayPage />} />
         </Routes>
       </UserContext.Provider>
