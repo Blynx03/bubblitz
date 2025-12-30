@@ -58,8 +58,9 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
                 ? { isVanishingValue: true as const, vanishingSpeed: getRandomValue(0, 8) }
                 : { isVanishingValue: false as const }  
             : { isVanishingValue: false as const }  
-        
-        const ballSize = getRandomValue(70, 200, 'ballSize', existingBallArray);
+            
+        // *** GET SCREEN SIZE WIDTH AND PLAY WITH THE MAX SIZE
+        const ballSize = getRandomValue(70, 140, 'ballSize', existingBallArray);
 
         const ball: BallCharacterType = {
             ballId: i,
@@ -100,7 +101,8 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
             ...ball, ballId: i, zIndex: i }
         } else {
             return {
-            ...ball, ballId: LEVEL_CONFIG[level].numberOfBalls - i, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
+            // ...ball, ballId: LEVEL_CONFIG[level].numberOfBalls - i, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
+            ...ball, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
         }
     });
     return finalSortedBalls;

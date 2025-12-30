@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext } from 'react'
 import UserContext, { type UserContextType } from '../context/UserContext';
 
 const ThemeMode = () => {

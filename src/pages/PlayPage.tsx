@@ -6,7 +6,6 @@ import useContainerSize from '../hooks/useContainerSize';
 import animateContainer from '../utilities/animateContainer';
 import ThemeMode from '../components/ThemeMode';
 import Title from '../components/Title';
-import getTrueOrFalse from '../utilities/getTrueOrFalse';
 import GameOver from '../components/GameOver';
 
 const PlayPage = () => {
@@ -27,18 +26,8 @@ const PlayPage = () => {
     ballRefs.current = [];
     const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
     animateContainer({container, generatedBalls, ballRefs});
-    console.log('container size', container.width, container.height);
     setBallsCharacter(generatedBalls);
   },[gameLevel, container])
-
-  console.log('balls characters ', ballsCharacter)
-  // const getAnimateValue = (rotating: boolean, rotateClockwise?: boolean, changeBallSize?: boolean ) => {
-  //   let isBallRotating = rotating ? getTrueOrFalse() : false;
-  //   let rotationalDirection = rotateClockwise ? 'rotate-cw' : 'rotate-ccw';
-  //   let rotateAnimation = isBallRotating ? `${rotationalDirection} linear 3s infinite` : '';
-
-  //   return (`${rotateAnimation}, ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
-  //   )}      
 
   const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
     return (`${rotateClockwise ? 'rotate-cw' : 'rotate-ccw'} linear 3s infinite 
@@ -51,14 +40,22 @@ const PlayPage = () => {
     if (!el) return;
     if ( ballsCharacter[targetBallIndex].ballValue === clickedBall.ballValue) {
       const newTargetIndex = targetBallIndex + 1;
-      setTargetBallIndex(newTargetIndex)
-      el.style.display = 'none';
+      el.style.animation = 'pop 0.3s linear forwards'
+      setTargetBallIndex(newTargetIndex);
       if (ballsCharacter.length === newTargetIndex) {
         // show level is cleared...and button "Click to continue"
         setGameLevel((prev) => prev + 1);
         setBallsCharacter([]); // reset play-area-container children
       }
     } else {
+        el.style.animation = 'shake 2.6s linear';
+        const correctBall = ballRefs.current[clickedBall.ballId];
+        correctBall.style.animation = 'wrong-guess 2.6s linear';
+        const child = correctBall.firstElementChild as HTMLElement | null;
+        if (!child) return;
+
+        child.style.animation = 'change-color 2.6s linear';
+
       const livesLeft = lives - 1;
       if (livesLeft === 0) {
         console.log('game over!')
@@ -72,31 +69,38 @@ const PlayPage = () => {
       // if lost 3 times...then game over
     }
   }
+
+  console.log('balls character = ', ballsCharacter)
+
+  function removeBall(el: HTMLElement | null) {
+    if (!el) return;
+    el.style.display = 'none';
+  }
   
   return (
     <div className={`play-page-container ${mode}`}>
-      <ThemeMode />
-      <div className='play-page-title-instruction-level-container'>
-        <div className='play-page-title-container'>
+      <div className='play-page-hud-container'>
+        <div className='play-page-title-and-theme-container'>
+          <ThemeMode />
           <Title />
         </div>
-        <div className='play-page-instruction-level-container'>
-          <div className='play-page-instruction-container'>
-              <span className='instruction-pre'>Pop the balls in </span>
-              <span className='instruction-ball-order'>{isAscending ? 'ASCENDING' : 'DESCENDING'}</span>
-              <span className='instruction-post'> order!</span>
-          </div>
+        <div className='play-page-instruction-container'>
+            <span className='instruction-pre'>Pop the balls in&nbsp;</span>
+            <span className='instruction-ball-order'>{isAscending ? 'ASCENDING' : 'DESCENDING'}</span>
+            <span className='instruction-post'>&nbsp;order!</span>
+        </div>
+        <div className='play-page-level-lives-container'>
           <div className='play-page-level'>Level: {gameLevel}</div>
+          <div className='play-page-lives'>Lives: {lives}</div>
         </div>
       </div>
-      <div className='play-page-lives'>Lives: {lives}</div>
       <div ref={playAreaRef} className='play-area-container'>
         {ballsCharacter.map((ball,i) => 
           (
             <div
               key={ball.ballId}
               ref={el => { if (el) ballRefs.current[ball.ballId] = el}}
-              className={'ball'}
+              className='ball'
               onClick={() => handleClick(ball, ballRefs.current[ball.ballId])}
               style={{
                 backgroundColor:`var(--ball-color${ball.ballColor})`, 
@@ -107,9 +111,10 @@ const PlayPage = () => {
                 top: `${ball.yStartingPosition}px`,
                 zIndex: `${ball.zIndex}`,
                 animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize )
-              }}>
+              }}
+                onAnimationEnd={() => isGameOver ? removeBall(ballRefs.current[ball.ballId]) : null}>
               <div 
-                className={`ball-value ${ball.ballValue === 6 ? 'six' : ''}`}
+                className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 || ball.ballValue === 9 || ball.ballValue === 99 ? 'six' : ''}`}
                 style={{
                   animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                 }}>
