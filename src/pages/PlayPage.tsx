@@ -7,6 +7,9 @@ import animateContainer from '../utilities/animateContainer';
 import ThemeMode from '../components/ThemeMode';
 import Title from '../components/Title';
 import GameOver from '../components/GameOver';
+import Button from '../components/Button';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const PlayPage = () => {
   const playAreaRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +20,7 @@ const PlayPage = () => {
   const newTargetIndex: number = 0;
   const [ lives, setLives ] = useState<number>(3);
   const [ isGameOver, setIsGameOver ] = useState(false);
+  const nav = useNavigate();
 
 
   useEffect(() => {
@@ -29,8 +33,12 @@ const PlayPage = () => {
     setBallsCharacter(generatedBalls);
   },[gameLevel, container])
 
-  const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
-    return (`${rotateClockwise ? 'rotate-cw' : 'rotate-ccw'} linear 3s infinite 
+  const getAnimateValue = (ball: BallCharacterType | null, changeBallSize?: boolean ) => {
+    let rotateDirection = '';
+    if (ball) {
+      rotateDirection = `${ball.rotate?.rotateClockwise ? 'rotate-cw' : 'rotate-ccw'}`
+    }
+    return (`${rotateDirection} linear 3s infinite 
             ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
     )}      
 
@@ -42,6 +50,7 @@ const PlayPage = () => {
       const newTargetIndex = targetBallIndex + 1;
       el.style.animation = 'pop 0.3s linear forwards'
       setTargetBallIndex(newTargetIndex);
+      removeBall(el);
       if (ballsCharacter.length === newTargetIndex) {
         // show level is cleared...and button "Click to continue"
         setGameLevel((prev) => prev + 1);
@@ -81,8 +90,8 @@ const PlayPage = () => {
     <div className={`play-page-container ${mode}`}>
       <div className='play-page-hud-container'>
         <div className='play-page-title-and-theme-container'>
-          <ThemeMode />
           <Title />
+          <ThemeMode />
         </div>
         <div className='play-page-instruction-container'>
             <span className='instruction-pre'>Pop the balls in&nbsp;</span>
@@ -110,7 +119,7 @@ const PlayPage = () => {
                 left: `${ball.xStartingPosition}px`,
                 top: `${ball.yStartingPosition}px`,
                 zIndex: `${ball.zIndex}`,
-                animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize )
+                animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize )
               }}
                 onAnimationEnd={() => isGameOver ? removeBall(ballRefs.current[ball.ballId]) : null}>
               <div 
@@ -125,7 +134,8 @@ const PlayPage = () => {
         }
         {isGameOver ? <GameOver/> : null}
       </div>
-
+      <Button btnClass='play-btn btn' btnText='Quit' onClick={() => nav('/')} />
+      <Footer />
     </div>
   )
 }

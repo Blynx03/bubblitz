@@ -15,7 +15,7 @@ const MainPage = () => {
 
     function handleClick(page: string) {
         if (page === 'play') {
-            setGameLevel(1);
+            setGameLevel(18);
             setBallsCharacter([]); // reset values
         }
         nav(`/${page}`);
@@ -24,8 +24,10 @@ const MainPage = () => {
 
     return (
         <div className={`main-page-container ${mode}`}>
-            <ThemeMode />
-            <Title />
+            <div className="main-title-and-theme-container">
+                <Title />
+                <ThemeMode />
+            </div>
             <TitleCaption />
             <DemoArea />
             <div className='main-btn-container'>

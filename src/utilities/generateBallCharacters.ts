@@ -58,7 +58,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
                 ? { isVanishingValue: true as const, vanishingSpeed: getRandomValue(0, 8) }
                 : { isVanishingValue: false as const }  
             : { isVanishingValue: false as const }  
-            
+
         // *** GET SCREEN SIZE WIDTH AND PLAY WITH THE MAX SIZE
         const ballSize = getRandomValue(70, 140, 'ballSize', existingBallArray);
 
@@ -78,33 +78,44 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
         return ball;
     });
     // sort balls depending on values
-    let sortedBalls: BallCharacterType[] = [];
-    let valueOrder: boolean;
 
-    if (LEVEL_CONFIG[level].ballValueOrder) {
-        valueOrder = getTrueOrFalse();
-        setIsAscending(valueOrder);
-        valueOrder
-        // ascending
-        ? sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
-        // descending 
-        : sortedBalls = [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
-    } else {
-        // ascending
-        sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
-    }
+    const isToBeSortedAscending = LEVEL_CONFIG[level].ballValueOrder ? getTrueOrFalse() : true;
 
-    // assign z-index depending on the order
-    const finalSortedBalls = sortedBalls.map((ball, i) => {
-        if (valueOrder) {
-            return { 
-            ...ball, ballId: i, zIndex: i }
-        } else {
-            return {
-            // ...ball, ballId: LEVEL_CONFIG[level].numberOfBalls - i, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
-            ...ball, zIndex: LEVEL_CONFIG[level].numberOfBalls - i}
-        }
-    });
+    setIsAscending(isToBeSortedAscending);
+
+    const sortedBalls = [...generatedBalls].sort((a, b) => isToBeSortedAscending ? a.ballValue - b.ballValue : b.ballValue - a.ballValue);
+    
+    const totalBalls = sortedBalls.length;
+
+    const finalSortedBalls = sortedBalls.map((ball, i) => ({
+        ...ball, zIndex: isToBeSortedAscending ? totalBalls - i : i + 1
+    }))
+    // let sortedBalls: BallCharacterType[] = [];
+    // let valueOrder: boolean = getTrueOrFalse();
+
+    // if (LEVEL_CONFIG[level].ballValueOrder) {
+    //     // valueOrder = getTrueOrFalse();
+    //     setIsAscending(valueOrder);
+    //     sortedBalls = valueOrder
+    //     // ascending
+    //     ? [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
+    //     // descending 
+    //     : [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
+    // } else {
+    //     // ascending
+    //     sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
+    // }
+
+    // // assign z-index depending on the order
+    // const finalSortedBalls = sortedBalls.map((ball, i) => {
+    //     if (valueOrder) {
+    //         return { 
+    //         ...ball, zIndex: sortedBalls.length - i }
+    //     } else {
+    //         return {
+    //         ...ball, zIndex: i}
+    //     }
+    // });
     return finalSortedBalls;
 }
 
