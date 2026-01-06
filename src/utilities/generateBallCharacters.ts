@@ -85,11 +85,12 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
 
     const sortedBalls = [...generatedBalls].sort((a, b) => isToBeSortedAscending ? a.ballValue - b.ballValue : b.ballValue - a.ballValue);
     
-    const totalBalls = sortedBalls.length;
+    // const totalBalls = sortedBalls.length;
 
-    const finalSortedBalls = sortedBalls.map((ball, i) => ({
-        ...ball, zIndex: isToBeSortedAscending ? totalBalls - i : i + 1
-    }))
+    // const finalSortedBalls = 
+    // sortedBalls.forEach((ball, i) => ({
+    //     ...ball, zIndex: totalBalls - i
+    // }))
     // let sortedBalls: BallCharacterType[] = [];
     // let valueOrder: boolean = getTrueOrFalse();
 
@@ -116,7 +117,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
     //         ...ball, zIndex: i}
     //     }
     // });
-    return finalSortedBalls;
+    return sortedBalls;
 }
 
 export default generateBallCharacters

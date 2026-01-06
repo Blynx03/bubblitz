@@ -5,7 +5,8 @@ export type BallCharacterType = {
     yStartingPosition: number,
     zIndex?: number,
     ballColor: number,
-    ballSize: number
+    ballSize: number,
+    timer?: number
 } & MovingType & RotatingType & ChangingSizeType & VanishingValueType;
 
 export type MovingType = 

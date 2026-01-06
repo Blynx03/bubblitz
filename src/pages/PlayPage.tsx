@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import UserContext, { type UserContextType } from '../context/UserContext';
 import type { BallCharacterType } from '../types/BallCharacter';
 import generateBallCharacters from '../utilities/generateBallCharacters';
@@ -20,6 +20,9 @@ const PlayPage = () => {
   const newTargetIndex: number = 0;
   const [ lives, setLives ] = useState<number>(3);
   const [ isGameOver, setIsGameOver ] = useState(false);
+  const [ animateLives, setAnimateLives ] = useState(false);
+  const [ animateLevel, setAnimateLevel ] = useState(false);
+  const [ animatePop, setAnimatePop ] = useState(false);
   const nav = useNavigate();
 
 
@@ -33,6 +36,26 @@ const PlayPage = () => {
     setBallsCharacter(generatedBalls);
   },[gameLevel, container])
 
+  useEffect(() => {
+    setAnimateLives(true);
+    const id = setTimeout(() => {
+      setAnimateLives(false)}, 1000);
+    return () => clearTimeout(id);
+  },[lives]);
+
+  useEffect(() => {
+    setAnimateLevel(true);
+    const id = setTimeout(() => {
+      setAnimateLevel(false)}, 1000);
+    return () => clearTimeout(id);
+  },[gameLevel]);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setAnimatePop(false)}, 300);
+    return () => clearTimeout(id);
+  }, [targetBallIndex] )
+
   const getAnimateValue = (ball: BallCharacterType | null, changeBallSize?: boolean ) => {
     let rotateDirection = '';
     if (ball) {
@@ -42,13 +65,14 @@ const PlayPage = () => {
             ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
     )}      
 
-  // This is where the game logic lives
+  // Game Logic
   
   function handleClick(clickedBall: BallCharacterType, el: HTMLElement | null) {
     if (!el) return;
     if ( ballsCharacter[targetBallIndex].ballValue === clickedBall.ballValue) {
       const newTargetIndex = targetBallIndex + 1;
-      el.style.animation = 'pop 0.3s linear forwards'
+      setAnimatePop(true);
+      // el.style.animation = 'pop 0.6s linear forwards'
       setTargetBallIndex(newTargetIndex);
       removeBall(el);
       if (ballsCharacter.length === newTargetIndex) {
@@ -59,18 +83,19 @@ const PlayPage = () => {
     } else {
         el.style.animation = 'shake 2.6s linear';
         const correctBall = ballRefs.current[clickedBall.ballId];
-        correctBall.style.animation = 'wrong-guess 2.6s linear';
+        correctBall.style.animation = 'wrong-guess 2s linear';
         const child = correctBall.firstElementChild as HTMLElement | null;
         if (!child) return;
 
-        child.style.animation = 'change-color 2.6s linear';
+        child.style.animation = 'change-color 2s linear';
 
       const livesLeft = lives - 1;
+      setLives(livesLeft);
       if (livesLeft === 0) {
         console.log('game over!')
         setIsGameOver(true);
       } else {
-        setLives(livesLeft);
+        // setLives(livesLeft);
         setIsGameOver(false);
       }
       // reduce number of lives... if lives are !0 then proceed with the current level. Show continue button.
@@ -99,8 +124,12 @@ const PlayPage = () => {
             <span className='instruction-post'>&nbsp;order!</span>
         </div>
         <div className='play-page-level-lives-container'>
-          <div className='play-page-level'>Level: {gameLevel}</div>
-          <div className='play-page-lives'>Lives: {lives}</div>
+          <div className='play-page-level'>Level: 
+            <span className={`play-page-level-value ${animateLevel ? 'emphasize' : ''}`}> {gameLevel}</span>
+          </div>
+          <div className='play-page-lives'>Lives: 
+            <span className={`play-page-lives-value ${animateLives ? 'emphasize' : ''}`}> {lives}</span>
+          </div>
         </div>
       </div>
       <div ref={playAreaRef} className='play-area-container'>
@@ -109,7 +138,7 @@ const PlayPage = () => {
             <div
               key={ball.ballId}
               ref={el => { if (el) ballRefs.current[ball.ballId] = el}}
-              className='ball'
+              className={`ball ${animatePop ? 'pop' : ''}`}
               onClick={() => handleClick(ball, ballRefs.current[ball.ballId])}
               style={{
                 backgroundColor:`var(--ball-color${ball.ballColor})`, 
@@ -118,7 +147,8 @@ const PlayPage = () => {
                 fontSize: `${ball.ballSize}px`,
                 left: `${ball.xStartingPosition}px`,
                 top: `${ball.yStartingPosition}px`,
-                zIndex: `${ball.zIndex}`,
+                // zIndex: `${ball.zIndex}`,
+                zIndex: ballsCharacter.length - i,
                 animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize )
               }}
                 onAnimationEnd={() => isGameOver ? removeBall(ballRefs.current[ball.ballId]) : null}>

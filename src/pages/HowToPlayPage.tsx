@@ -20,16 +20,18 @@ const HowToPlayPage = () => {
 
     return (
         <div className={mode}>
-        <ThemeMode />
         <section className="how-to-play">
 
          {/* Header  */}
-            <header className="how-to-play__header-container">
-                <h1 className="how-to-play__title">How to Play</h1>
-                <p className="how-to-play__subtitle">
-                Pop, think fast, and survive the Bubblitz!
-                </p>
-            </header>
+            <div className='how-to-play-header-theme-container'>
+                <ThemeMode />
+                <header className="how-to-play__header-container">
+                    <h1 className="how-to-play__title">How to Play</h1>
+                    <p className="how-to-play__subtitle">
+                    Pop, think fast, and survive the Bubblitz!
+                    </p>
+                </header>
+            </div>
 
             {/* Objective */}
             <div className='how-to-play-content-container'>
