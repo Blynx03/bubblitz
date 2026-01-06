@@ -32,7 +32,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/bubblitz/">
       <UserContext.Provider value={value}>
         <Routes >
           <Route index element={<MainPage/>} />
