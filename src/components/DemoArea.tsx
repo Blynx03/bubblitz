@@ -20,9 +20,13 @@ const DemoArea = () => {
         };
     }, [gameLevel, container]);
 
-    const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
-        return (`${rotateClockwise ? 'rotate-cw' : 'rotate-ccw'} linear 3s infinite 
-                ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
+    const getAnimateValue = (ball: BallCharacterType | null, changeBallSize?: boolean ) => {
+        let rotateDirection = '';
+        if (ball) {
+            rotateDirection = `${ball.rotate?.rotateClockwise ? 'rotate-cw' : 'rotate-ccw'}`
+        }
+        return (`${rotateDirection} linear 3s infinite
+                 ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
         )}      
 
     return ( 
@@ -41,11 +45,11 @@ const DemoArea = () => {
                         left: `${ball.xStartingPosition}px`, 
                         top: `${ball.yStartingPosition}px`, 
                         zIndex: `${ball.zIndex}`,
-                        animation: getAnimateValue(ball.isRotating ? ball.rotate?.rotateClockwise : false, ball.isChangingSize ) 
+                        animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize ) 
                     }}>
 
                     <div 
-                        className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 ? 'six' : ''}`}
+                        className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 || ball.ballValue === 9 || ball.ballValue === 99 ? 'six' : ''}`}
                         style={{
                             animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                         }}
