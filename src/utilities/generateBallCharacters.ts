@@ -1,4 +1,4 @@
-import { type Dispatch, type RefObject, type SetStateAction } from 'react';
+import { type Dispatch, type SetStateAction } from 'react';
 import type { BallCharacterType, ChangingSizeType, MovingType, RotatingType, VanishingValueType } from '../types/BallCharacter';
 import { LEVEL_CONFIG } from '../types/LevelConfig';
 import getRandomValue from './getRandomValue';
