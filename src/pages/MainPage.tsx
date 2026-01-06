@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Title from '../components/Title'
 import Footer from '../components/Footer'
 import DemoArea from '../components/DemoArea'

@@ -1,7 +1,5 @@
-import React, { useContext } from 'react'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
-import UserContext, { type UserContextType } from '../context/UserContext';
 
 const GameOver = ({onRestart}: {onRestart: () => void}) => {
     const nav = useNavigate();

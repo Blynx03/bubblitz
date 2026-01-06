@@ -1,6 +1,5 @@
 const Footer = () => {
     const date = new Date().getFullYear();
-    const footer = `The Dreamer &copy; - copyright ${date}`;
 
     return (
         <div className='footer-container'>

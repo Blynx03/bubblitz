@@ -47,7 +47,6 @@ const DemoArea = () => {
                             animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                         }}
                     >{ball.ballValue}</div>
-                    {/* <div className='ball-value' style={{fontSize: `${ball.ballSize - 70}px`}}>{ball.ballValue}</div> */}
                 </div>
                 )
             )}

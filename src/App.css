@@ -137,7 +137,6 @@ body {
 .theme-container {
   width: 50px;
   height: 30px;
-  /* right: clamp(10px, calc((100vw - 700px) / 2 + 16px), 400px); */
   border: 3px solid var(--accent-color);
   border-radius: 20px;
   background-color: var(--secondary-color);
@@ -232,7 +231,6 @@ body {
   width: clamp(320px, 70vw, 800px);
   height: 55%;
   border-radius: 10px;
-  /* border: 2px solid black; */
   background-color: var(--primary-color);
   box-shadow: 0 0 40px 10px var(--secondary-color);
   position: relative;
@@ -321,7 +319,6 @@ body {
   width: clamp(200px, 15vw, 350px);
   white-space: nowrap;
   border-radius: 10px;
-  /* height: 46px; */
   padding: 5px 10px;
   font-size: clamp(0.8em, 4.5vw, 1.6rem);
   background-color: var(--primary-color);
@@ -420,8 +417,6 @@ header {
 }
 
 .how-to-play__btn-container {
-  /* height: clamp(30px, 15vh, 100px);
-  width: 60%; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -466,7 +461,6 @@ header {
   height: 50%;
   display: flex;
   justify-content: space-between;
-  /* align-items: ; */
   padding-top: 0;
   
 }
@@ -539,7 +533,6 @@ header {
 
 .timer-container {
   width: clamp (150px, 20vw, 300px);
-  /* background-color: radial-gradient(circle at top left, var(--accent-color), var(--accent-color50) 50%, var(--primary-color) 100%); */
   background-color: var(--accent-color);
   border: 3px solid black;
   border-radius: 10px;
@@ -614,18 +607,9 @@ header {
     margin-top: 18px;
   }
 
-  .play-page-instruction-container {
-    /* margin: 0; */
-  }
 }
 
 @media (max-width: 600px) {
-  .play-page-hud-container {
-    /* height: 16%; */
-  }
-  .play-page-title-and-theme-container {
-  }
-
   .play-page-instruction-container {
     margin-top: 20px;
   }
@@ -664,9 +648,6 @@ header {
 }
 
 @media (max-width: 400px) and (min-width: 320px) {
-  .title-container {
-    /* margin-top: -25px; */
-  }
 
   .how-to-play__btn-container {
   }

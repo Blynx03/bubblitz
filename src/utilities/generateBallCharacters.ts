@@ -7,8 +7,6 @@ import type { ContainerRectType } from '../types/ContainerSize';
 
 const generateBallCharacters = (level: number, container: ContainerRectType, setIsAscending: Dispatch<SetStateAction<boolean>>): BallCharacterType[] => {
     const ballArray = Array.from({length: LEVEL_CONFIG[level].numberOfBalls});
-    // const { setBallsCharacter } = useContext(UserContext) as UserContextType;
-
     const existingBallArray: BallCharacterType[] = [];
 
     const xDir: 'left' | 'right' = getTrueOrFalse() ? 'right' : 'left';
@@ -18,6 +16,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
     const rotatingQ: boolean[] = [];
     const changingSizeQ: boolean[] = [];
     const vanishingQ: boolean[] = [];
+    let timer: number;
 
     ballArray.forEach((_,i) => {
         LEVEL_CONFIG[level].moving === undefined 
@@ -62,6 +61,11 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
         // *** GET SCREEN SIZE WIDTH AND PLAY WITH THE MAX SIZE
         const ballSize = getRandomValue(70, 140, 'ballSize', existingBallArray);
 
+        if (LEVEL_CONFIG[level].timer) {
+            
+            timer = LEVEL_CONFIG[level].timer
+        }
+
         const ball: BallCharacterType = {
             ballId: i,
             ballValue: getRandomValue(LEVEL_CONFIG[level].minValue, LEVEL_CONFIG[level].maxValue, 'ballValue', existingBallArray),     
@@ -69,6 +73,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
             yStartingPosition: getRandomValue(0, container.height - ballSize, 'yStartingPosition', existingBallArray),
             ballColor: getRandomValue(0, 35, 'ballColor', existingBallArray),
             ballSize,
+            timer,
             ...movingPart,
             ...rotatingPart,
             ...changingSizePart,
@@ -85,38 +90,6 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
 
     const sortedBalls = [...generatedBalls].sort((a, b) => isToBeSortedAscending ? a.ballValue - b.ballValue : b.ballValue - a.ballValue);
     
-    // const totalBalls = sortedBalls.length;
-
-    // const finalSortedBalls = 
-    // sortedBalls.forEach((ball, i) => ({
-    //     ...ball, zIndex: totalBalls - i
-    // }))
-    // let sortedBalls: BallCharacterType[] = [];
-    // let valueOrder: boolean = getTrueOrFalse();
-
-    // if (LEVEL_CONFIG[level].ballValueOrder) {
-    //     // valueOrder = getTrueOrFalse();
-    //     setIsAscending(valueOrder);
-    //     sortedBalls = valueOrder
-    //     // ascending
-    //     ? [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
-    //     // descending 
-    //     : [...generatedBalls].sort((a, b) => b.ballValue - a.ballValue)
-    // } else {
-    //     // ascending
-    //     sortedBalls = [...generatedBalls].sort((a, b) => a.ballValue - b.ballValue)
-    // }
-
-    // // assign z-index depending on the order
-    // const finalSortedBalls = sortedBalls.map((ball, i) => {
-    //     if (valueOrder) {
-    //         return { 
-    //         ...ball, zIndex: sortedBalls.length - i }
-    //     } else {
-    //         return {
-    //         ...ball, zIndex: i}
-    //     }
-    // });
     return sortedBalls;
 }
 

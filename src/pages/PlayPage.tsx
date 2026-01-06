@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import UserContext, { type UserContextType } from '../context/UserContext';
 import type { BallCharacterType } from '../types/BallCharacter';
 import generateBallCharacters from '../utilities/generateBallCharacters';
@@ -19,7 +19,6 @@ const PlayPage = () => {
   const { isLightTheme, isAscending, setIsAscending, setPlayKey, gameLevel, setGameLevel, gameTimer, setGameTimer, ballsCharacter, setBallsCharacter, ballRefs, hasTimer, setHasTimer } = useContext(UserContext) as UserContextType;
   const mode = isLightTheme ? 'light-mode' : 'dark-mode';
   const [ targetBallIndex, setTargetBallIndex ] = useState<number>(0);
-  const newTargetIndex: number = 0;
   const [ lives, setLives ] = useState<number>(3);
   const [ isGameOver, setIsGameOver ] = useState(false);
   const [ animateLives, setAnimateLives ] = useState(false);
@@ -127,9 +126,6 @@ const PlayPage = () => {
         // setLives(livesLeft);
         setIsGameOver(false);
       }
-      // reduce number of lives... if lives are !0 then proceed with the current level. Show continue button.
-      // Also show the should be next ball 
-      // if lost 3 times...then game over
     }
   }
 
@@ -189,7 +185,6 @@ const PlayPage = () => {
                 fontSize: `${ball.ballSize}px`,
                 left: `${ball.xStartingPosition}px`,
                 top: `${ball.yStartingPosition}px`,
-                // zIndex: `${ball.zIndex}`,
                 zIndex: ballsCharacter.length - i,
                 animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize )
               }}

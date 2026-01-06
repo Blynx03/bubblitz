@@ -1,4 +1,4 @@
-import React, { type Dispatch, type RefObject, type SetStateAction, createContext} from 'react'
+import { type Dispatch, type RefObject, type SetStateAction, createContext} from 'react'
 import type { BallCharacterType } from '../types/BallCharacter';
 
 export interface UserContextType {

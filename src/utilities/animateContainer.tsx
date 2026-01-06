@@ -10,8 +10,6 @@ type animateType = {
     ballRefs: React.RefObject<HTMLElement[]>
 }
 
-// gameLevel: number, container: ContainerRectType, containerRef: React.RefObject<HTMLElement>, ballsCharacter: BallCharacterType[]
-
 const animateContainer = ({container, generatedBalls, ballRefs }: animateType) => {
     let rafId: number;
 
@@ -20,7 +18,6 @@ const animateContainer = ({container, generatedBalls, ballRefs }: animateType) =
         generatedBalls.forEach((ball, i) => {
 
             // for moving animation
-            // if (!ball.isMoving) return;
 
             if (ball.move.xDirection === 'right') {
                 ball.xStartingPosition += ball.move.moveSpeed;
