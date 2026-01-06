@@ -15,7 +15,7 @@ const animateContainer = ({container, generatedBalls, ballRefs }: animateType) =
 
     const animate = () => {
 
-        generatedBalls.forEach((ball, i) => {
+        generatedBalls.forEach((ball) => {
 
             // for moving animation
 
@@ -60,8 +60,10 @@ const animateContainer = ({container, generatedBalls, ballRefs }: animateType) =
         }); 
 
         rafId = requestAnimationFrame(animate);              
-    }
+    };
     rafId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(rafId);
 }
 
 export default animateContainer

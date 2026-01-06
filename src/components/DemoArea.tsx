@@ -14,7 +14,10 @@ const DemoArea = () => {
         if (!container || !containerRef) return;
         const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
         setBallsCharacter(generatedBalls);
-        animateContainer({container, generatedBalls, ballRefs});
+        const stopAnimation = animateContainer({container, generatedBalls, ballRefs});
+        return () => { 
+            stopAnimation();
+        };
     }, [gameLevel, container]);
 
     const getAnimateValue = (rotateClockwise?: boolean, changeBallSize?: boolean ) => {
@@ -24,7 +27,7 @@ const DemoArea = () => {
 
     return ( 
         <div ref={containerRef} className='demo-container'>
-            {ballsCharacter.map((ball, i) => 
+            {ballsCharacter.map((ball) => 
                 (
                 <div 
                     key={ball.ballId} 

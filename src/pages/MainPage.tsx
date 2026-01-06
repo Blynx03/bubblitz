@@ -15,7 +15,7 @@ const MainPage = () => {
 
     function handleClick(page: string) {
         if (page === 'play') {
-            setGameLevel(31);
+            setGameLevel(1);
             setBallsCharacter([]); // reset values
         }
         nav(`/${page}`);

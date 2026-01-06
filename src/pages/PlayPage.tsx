@@ -32,8 +32,13 @@ const PlayPage = () => {
     ballRefs.current = [];
 
     const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
-    animateContainer({container, generatedBalls, ballRefs});
     setBallsCharacter(generatedBalls);
+
+    const stopAnimation = animateContainer({container, generatedBalls, ballRefs});
+
+    return () => {
+      stopAnimation();
+    };
   },[gameLevel, container]);
 
   useEffect(() => {
