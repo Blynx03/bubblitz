@@ -13,6 +13,10 @@ export interface UserContextType {
     setIsAscending: Dispatch<SetStateAction<boolean>>;
     playKey: number;
     setPlayKey: Dispatch<SetStateAction<number>>;
+    hasTimer: boolean;
+    setHasTimer: Dispatch<SetStateAction<boolean>>;
+    gameTimer: number;
+    setGameTimer: Dispatch<SetStateAction<number>>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);

@@ -10,11 +10,13 @@ import GameOver from '../components/GameOver';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
+import ShowTimer from '../components/ShowTimer';
+import { LEVEL_CONFIG } from '../types/LevelConfig';
 
 const PlayPage = () => {
   const playAreaRef = useRef<HTMLDivElement | null>(null);
   const container = useContainerSize(playAreaRef);
-  const { isLightTheme, isAscending, setIsAscending, gameLevel, setGameLevel, ballsCharacter, setBallsCharacter, ballRefs } = useContext(UserContext) as UserContextType;
+  const { isLightTheme, isAscending, setIsAscending, setPlayKey, gameLevel, setGameLevel, gameTimer, setGameTimer, ballsCharacter, setBallsCharacter, ballRefs, hasTimer, setHasTimer } = useContext(UserContext) as UserContextType;
   const mode = isLightTheme ? 'light-mode' : 'dark-mode';
   const [ targetBallIndex, setTargetBallIndex ] = useState<number>(0);
   const newTargetIndex: number = 0;
@@ -22,19 +24,27 @@ const PlayPage = () => {
   const [ isGameOver, setIsGameOver ] = useState(false);
   const [ animateLives, setAnimateLives ] = useState(false);
   const [ animateLevel, setAnimateLevel ] = useState(false);
-  const [ animatePop, setAnimatePop ] = useState(false);
   const nav = useNavigate();
-
 
   useEffect(() => {
     if (!playAreaRef || !container) return;
     setIsAscending(true);
     setTargetBallIndex(0);
     ballRefs.current = [];
+
     const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
     animateContainer({container, generatedBalls, ballRefs});
     setBallsCharacter(generatedBalls);
-  },[gameLevel, container])
+  },[gameLevel, container]);
+
+  useEffect(() => {
+    if (LEVEL_CONFIG[gameLevel].timer) {
+      setHasTimer(true);
+      setGameTimer(LEVEL_CONFIG[gameLevel].timer);
+    } else {
+      setHasTimer(false)
+    }
+  },[gameLevel])
 
   useEffect(() => {
     setAnimateLives(true);
@@ -51,10 +61,24 @@ const PlayPage = () => {
   },[gameLevel]);
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      setAnimatePop(false)}, 300);
-    return () => clearTimeout(id);
-  }, [targetBallIndex] )
+    if (!hasTimer) return;
+    if (isGameOver) return;
+
+    if (gameTimer > 0) {
+      const id = setInterval(() => {
+        setGameTimer((prev) => {
+          if (prev <= 1) {
+            setIsGameOver(true);
+            clearInterval(id);
+            return 0;
+          } else {
+            return prev - 1;
+          }
+        });
+      }, 1000);
+      return () => clearInterval(id);
+    }
+  }, [gameLevel, hasTimer, isGameOver]);
 
   const getAnimateValue = (ball: BallCharacterType | null, changeBallSize?: boolean ) => {
     let rotateDirection = '';
@@ -71,10 +95,15 @@ const PlayPage = () => {
     if (!el) return;
     if ( ballsCharacter[targetBallIndex].ballValue === clickedBall.ballValue) {
       const newTargetIndex = targetBallIndex + 1;
-      setAnimatePop(true);
-      // el.style.animation = 'pop 0.6s linear forwards'
+      el.style.animation = 'pop 0.6s linear forwards';
+      el.style.pointerEvents = 'none';
+      el.addEventListener('animationend', () => { 
+        removeBall(el);
+      },
+      { once: true }
+    );
       setTargetBallIndex(newTargetIndex);
-      removeBall(el);
+
       if (ballsCharacter.length === newTargetIndex) {
         // show level is cleared...and button "Click to continue"
         setGameLevel((prev) => prev + 1);
@@ -110,7 +139,18 @@ const PlayPage = () => {
     if (!el) return;
     el.style.display = 'none';
   }
+
+  const resetGame = () => {
+    setGameLevel(1);
+    setLives(3);
+    setIsGameOver(false);
+    setBallsCharacter([]);
+    setHasTimer(false);
+    setPlayKey(key => key + 1);
+    nav('/play');
+  }
   
+  console.log('game over = ', isGameOver)
   return (
     <div className={`play-page-container ${mode}`}>
       <div className='play-page-hud-container'>
@@ -133,17 +173,19 @@ const PlayPage = () => {
         </div>
       </div>
       <div ref={playAreaRef} className='play-area-container'>
+        {hasTimer ? <ShowTimer /> : null}
         {ballsCharacter.map((ball,i) => 
           (
             <div
               key={ball.ballId}
               ref={el => { if (el) ballRefs.current[ball.ballId] = el}}
-              className={`ball ${animatePop ? 'pop' : ''}`}
+              className={'ball'}
               onClick={() => handleClick(ball, ballRefs.current[ball.ballId])}
               style={{
                 backgroundColor:`var(--ball-color${ball.ballColor})`, 
                 width: ball.ballSize,
                 height: ball.ballSize,
+                pointerEvents: `${isGameOver ? 'none' : 'auto'}`,
                 fontSize: `${ball.ballSize}px`,
                 left: `${ball.xStartingPosition}px`,
                 top: `${ball.yStartingPosition}px`,
@@ -162,7 +204,7 @@ const PlayPage = () => {
             </div>
           ))
         }
-        {isGameOver ? <GameOver/> : null}
+        {isGameOver ? <GameOver onRestart={resetGame}/> : null}
       </div>
       <Button btnClass='play-btn btn' btnText='Quit' onClick={() => nav('/')} />
       <Footer />

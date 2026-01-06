@@ -14,6 +14,10 @@ function App() {
   let ballRefs = useRef<HTMLElement[]>([]);
   const [ isAscending, setIsAscending ] = useState(true);
   const [ playKey, setPlayKey ] = useState(0);
+  const [ hasTimer, setHasTimer ] = useState(false);
+  const [ gameTimer, setGameTimer ] = useState<number>(0);
+
+
 
 
   const value = {
@@ -22,7 +26,9 @@ function App() {
     ballsCharacter, setBallsCharacter,
     ballRefs,
     isAscending, setIsAscending,
-    playKey, setPlayKey
+    playKey, setPlayKey,
+    hasTimer, setHasTimer,
+    gameTimer, setGameTimer,
   }
 
   return (

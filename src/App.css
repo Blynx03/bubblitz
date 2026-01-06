@@ -303,10 +303,9 @@ body {
 }
 
 @keyframes vanish {
-  0% {opacity: 1}
-  50% {opacity: 0}
+  0%,50% {opacity: 1}
+  25%, 75% {opacity: 0}
   100% {opacity: 1}
-
 }
 
 .main-btn-container {
@@ -498,9 +497,11 @@ header {
 }
 
 .play-page-level-lives-container {
+  width: 80%;
   font-family: var(--font-cleaner);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-self: center;
   z-index: 5;
 }
 
@@ -522,7 +523,7 @@ header {
 }
 
 .play-area-container {
-  margin-top: 50px;
+  margin-top: 80px;
   width: clamp(330px, 70%, 700px);
   height: 60%;
   border-radius: 10px;
@@ -534,6 +535,30 @@ header {
 
 .play-btn {
   margin-top: 20px;
+}
+
+.timer-container {
+  width: clamp (150px, 20vw, 300px);
+  /* background-color: radial-gradient(circle at top left, var(--accent-color), var(--accent-color50) 50%, var(--primary-color) 100%); */
+  background-color: var(--accent-color);
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 2px 10px;
+  justify-self: center;
+  align-self:self-start ;
+  margin-top: -70px;
+  font-family: var(--font-cleaner);
+  box-shadow: 0 0 5px 0px red;
+  animation: glow 1s linear infinite alternate-reverse;
+}
+
+@keyframes glow {
+  100% { box-shadow: 0 0 20px 10px red;}
+}
+
+.timer {
+  font-size: clamp(1rem, 3vw, 2.4rem);
+  color: var(--warning-color);
 }
 
 .game-over-container {
@@ -632,6 +657,10 @@ header {
     margin-top: 10px;
     height: 56%;
   }
+
+  .timer-container {
+    margin-top: -50px;
+  }
 }
 
 @media (max-width: 400px) and (min-width: 320px) {
@@ -642,7 +671,8 @@ header {
   .how-to-play__btn-container {
   }
 
-  .play-area-container {
-
+  .timer-container {
+    margin-top: -40px;
+    border: 2px solid black;
   }
 }
