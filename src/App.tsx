@@ -30,9 +30,9 @@ function App() {
 
   return (
     // <BrowserRouter basename={import.meta.env.MODE === 'production' ? '/bubblitz/' : '/'}>
-    // <BrowserRouter basename='/bubblitz/'>
-    // <BrowserRouter basename='/'>
-    <BrowserRouter >
+    <BrowserRouter basename='/bubblitz/'>
+    {/* <BrowserRouter basename='/'> */}
+    {/* <BrowserRouter > */}
       <UserContext.Provider value={value}>
         <Routes >
           <Route index element={<MainPage/>} />

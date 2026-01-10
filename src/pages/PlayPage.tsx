@@ -211,7 +211,7 @@ const PlayPage = () => {
         }
         {isGameOver ? <GameOver onRestart={resetGame}/> : null}
       </div>
-      <Button btnClass='play-btn btn' btnText='Quit' onClick={quitGame} />
+      <Button btnClass='quit-btn btn' btnText='Quit' onClick={quitGame} />
       <Footer />
     </div>
   )

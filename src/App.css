@@ -546,7 +546,7 @@ header {
 
 .play-area-container {
   margin-top: 20px;
-  width: clamp(330px, 70vw, 800px);
+  width: clamp(350px, 70vw, 800px);
   height: 60%;
   border-radius: 10px;
   background: linear-gradient(23deg, var(--primary-color), var(--accent-color), var(--primary-color));
@@ -696,5 +696,12 @@ header {
   height: 65%;
   }
 
+  .play-area-container {
+    margin-top: 10px;
+  }
+
+  .quit-btn {
+    margin-top: 12px;
+  }
 
 }
