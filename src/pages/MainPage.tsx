@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import Title from '../components/Title'
 import Footer from '../components/Footer'
 import DemoArea from '../components/DemoArea'
@@ -7,20 +7,34 @@ import TitleCaption from '../components/TitleCaption'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import ThemeMode from '../components/ThemeMode'
+import { playSound } from '../utilities/playSound'
 
 const MainPage = () => {
-    const { isLightTheme, setGameLevel, setBallsCharacter } = useContext(UserContext) as UserContextType;
+    const { isLightTheme, setGameLevel, setBallsCharacter, ballRefs, setHasTimer, setGameTimer } = useContext(UserContext) as UserContextType;
     let mode = isLightTheme ? 'light-mode' : 'dark-mode';
     const nav = useNavigate();
 
+    const hardResetGame = () => {
+        setBallsCharacter([]);
+        ballRefs.current = [];
+        setGameLevel(1);
+        setHasTimer(false);
+        setGameTimer(0);
+    }
+
     function handleClick(page: string) {
+        playSound('click');
         if (page === 'play') {
-            setGameLevel(1);
-            setBallsCharacter([]); // reset values
+            // reset values
+            hardResetGame();
         }
         nav(`/${page}`);
 
     }
+
+    useEffect(() => {
+        playSound('intro');
+    },[]);
 
     return (
         <div className={`main-page-container ${mode}`}>

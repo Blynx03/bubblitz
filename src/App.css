@@ -80,6 +80,8 @@
 }
 
 body {
+  width: 100%;
+  height: 100%;
   padding: 
     env(safe-area-inset-top)
     env(safe-area-inset-right)
@@ -88,14 +90,20 @@ body {
 }
 
 .main-page-container {
-  width: 100svw;
+  width: 100dvw;
   min-width: 100vw;
-  height: 100svh;
+  height: 100dvh;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: var(--bg-color);
+  animation: appear 0.5s linear forwards;
+}
+
+@keyframes appear {
+  0% { opacity: 0; }
+  100% { opacity: 1;}
 }
 
 .main-title-and-theme-container {
@@ -228,12 +236,13 @@ body {
 
 .demo-container {
   margin-top: 20px;
-  width: clamp(320px, 70vw, 800px);
+  width: clamp(330px, 70vw, 800px);
   height: 55%;
   border-radius: 10px;
   background-color: var(--primary-color);
-  box-shadow: 0 0 40px 10px var(--secondary-color);
+  /* box-shadow: 0 0 40px 10px var(--secondary-color); */
   position: relative;
+  pointer-events: none;
 }
 
 .ball {
@@ -248,7 +257,7 @@ body {
 
 @keyframes pop {
   0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.2); opacity: 0; }
 }
 
 @keyframes wrong-guess {
@@ -257,17 +266,26 @@ body {
 }
 
 @keyframes shake {
-  0%, 20%, 40%, 60%, 80%, 100% { transform: translateX(-10px);}
-  10%, 30%, 50%, 70%, 90% { transform: translateX(10px)}
+  0%, 20%, 40%, 60%, 80%, 100% { transform: translateX(-20px);}
+  10%, 30%, 50%, 70%, 90% { transform: translateX(20px)}
 }
 
-@keyframes emphasize {
-  0% { transform: translate(0, 25vh) scale(10); }
+@keyframes emphasize-lives {
+  0% { transform: translate(-25vh, 40vh) scale(10); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
-.emphasize {
-  animation: emphasize 1500ms ease both;
+@keyframes emphasize-level {
+  0% { transform: translate(17vh, 40vh) scale(10); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.emphasize-lives {
+  animation: emphasize-lives 1500ms ease both;
+}
+
+.emphasize-level {
+  animation: emphasize-level 1500ms ease both;
 }
 
 .ball-value {
@@ -335,10 +353,10 @@ body {
 
 /* how to play page */
 .how-to-play {
-  width: 100vw;
   width: 100dvw;
-  height: 100vh;
-  min-height: 100dvh;
+  min-width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
   font-family: var(--font-primary);
   background-color: var(--primary-color);
   display: flex;
@@ -379,7 +397,7 @@ header {
 
 
 .how-to-play-content-container {
-  height: 63%;
+  height: 64%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -437,10 +455,10 @@ header {
 /* play-page */
 .play-page-container {
   box-sizing: border-box;
-  width: 100vw;
-  min-width: 100svw;
-  height: 100vh;
-  min-height: 100svh;
+  width: 100dvw;
+  min-width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -450,18 +468,15 @@ header {
 }
 
 .play-page-hud-container {
-  height: 20%;
   width: clamp(320px, 70vw, 750px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 6px;
 }
 
 .play-page-title-and-theme-container {
-  height: 50%;
   display: flex;
   justify-content: space-between;
-  padding-top: 0;
   
 }
 
@@ -473,7 +488,6 @@ header {
 
 .play-page-instruction-container {
   width: 100%;
-  margin-top: 50px;
   display: flex;
   justify-content: center;
   font-family: var(--font-cleaner);
@@ -490,64 +504,89 @@ header {
   text-decoration: underline;
 }
 
-.play-page-level-lives-container {
-  width: 80%;
+.play-page-level-timer-lives-container {
+  width: 100%;
   font-family: var(--font-cleaner);
   display: flex;
   justify-content: space-between;
-  align-self: center;
+  align-items: center;
   z-index: 5;
 }
 
 .play-page-level {
   color: var(--accent-color);
-  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 3vw, 1.8rem);
 }
 
 .play-page-lives {
   color: var(--warning-color);
-  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 3vw, 1.8rem);
 }
 
 .play-page-level-value, .play-page-lives-value {
-  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-size: clamp(1rem, 3vw, 2rem);
   margin-left: 8px;
   display: inline-block;
   z-index: 200;
 }
 
+.timer-container {
+  width: clamp (150px, 40vw, 300px);
+  padding: 0 10px;
+  background-color: var(--accent-color);
+  border: 2px solid black;
+  border-radius: 10px;
+  font-family: var(--font-cleaner);
+  animation: glow 1s linear infinite alternate-reverse;
+}
+
+@keyframes glow {
+  100% { box-shadow: 0 0 10px 4px rgb(253, 29, 29);}
+}
+
 .play-area-container {
-  margin-top: 80px;
-  width: clamp(330px, 70%, 700px);
+  margin-top: 20px;
+  width: clamp(330px, 70vw, 800px);
   height: 60%;
   border-radius: 10px;
-  border: 2px solid black; 
-  background-image: linear-gradient(23deg, var(--primary-color), var(--accent-color), var(--primary-color));
-  box-shadow: 0 0 30px 10px var(--secondary-color);
+  background: linear-gradient(23deg, var(--primary-color), var(--accent-color), var(--primary-color));
   position: relative;
+  z-index: 0;
+}
+
+.demo-container::before, .demo-container::after, .play-area-container::before, .play-area-container::after {
+  content: '';
+  position: absolute;
+  background: conic-gradient(from var(--deg) at center, var(--warning-color), var(--accent-color), var(--secondary-color), var(--warning-color), var(--accent-color), var(--secondary-color)) var(--warning-color);
+  inset: -2px;
+  border-radius: inherit;
+  z-index: -2;
+  animation: spin 8s linear infinite;
+}
+
+/* .play-area-container::before, .play-area-container::after {
+  z-index: -2;
+} */
+
+.demo-container::after, .play-area-container::after {
+  filter: blur(20px);
+}
+
+@property --deg {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@keyframes spin {
+  to {--deg: 360deg}
 }
 
 .play-btn {
   margin-top: 20px;
 }
 
-.timer-container {
-  width: clamp (150px, 20vw, 300px);
-  background-color: var(--accent-color);
-  border: 3px solid black;
-  border-radius: 10px;
-  padding: 2px 10px;
-  justify-self: center;
-  align-self:self-start ;
-  margin-top: -70px;
-  font-family: var(--font-cleaner);
-  box-shadow: 0 0 5px 0px red;
-  animation: glow 1s linear infinite alternate-reverse;
-}
 
-@keyframes glow {
-  100% { box-shadow: 0 0 20px 10px red;}
-}
 
 .timer {
   font-size: clamp(1rem, 3vw, 2.4rem);
@@ -600,13 +639,15 @@ header {
   .title {
     margin-top: 12px;
     font-size: clamp(3.3rem, 12vw, 5rem);
-    transform: scaleY(1.3);
   }
 
   .main-caption-container {
     margin-top: 18px;
   }
 
+  .play-page-instruction-container {
+    margin-top: 10px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -642,18 +683,18 @@ header {
     height: 56%;
   }
 
-  .timer-container {
-    margin-top: -50px;
-  }
 }
 
 @media (max-width: 400px) and (min-width: 320px) {
 
-  .how-to-play__btn-container {
+  .how-to-play {
+    /* height: calc(100% - 160px); */
+    min-height: 100svh;
   }
 
-  .timer-container {
-    margin-top: -40px;
-    border: 2px solid black;
+  .how-to-play-content-container {
+  height: 65%;
   }
+
+
 }

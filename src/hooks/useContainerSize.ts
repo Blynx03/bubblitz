@@ -26,7 +26,7 @@ export const useContainerSize = (ref: React.RefObject<HTMLElement | null>) => {
     observer.observe(el);
   
     return () => observer.disconnect();
-  },[ref]);
+  },[]);
 
   return container;
 }

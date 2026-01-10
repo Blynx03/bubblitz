@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import ShowTimer from '../components/ShowTimer';
 import { LEVEL_CONFIG } from '../types/LevelConfig';
+import useQuit from '../utilities/useQuit';
+import { playSound } from '../utilities/playSound';
 
 const PlayPage = () => {
   const playAreaRef = useRef<HTMLDivElement | null>(null);
@@ -24,6 +26,7 @@ const PlayPage = () => {
   const [ animateLives, setAnimateLives ] = useState(false);
   const [ animateLevel, setAnimateLevel ] = useState(false);
   const nav = useNavigate();
+  const quitGame = useQuit();
 
   useEffect(() => {
     if (!playAreaRef || !container) return;
@@ -73,9 +76,11 @@ const PlayPage = () => {
         setGameTimer((prev) => {
           if (prev <= 1) {
             setIsGameOver(true);
+            playSound('gameover');
             clearInterval(id);
             return 0;
           } else {
+            playSound('tick')
             return prev - 1;
           }
         });
@@ -97,9 +102,10 @@ const PlayPage = () => {
   
   function handleClick(clickedBall: BallCharacterType, el: HTMLElement | null) {
     if (!el) return;
+    playSound('choice')
     if ( ballsCharacter[targetBallIndex].ballValue === clickedBall.ballValue) {
       const newTargetIndex = targetBallIndex + 1;
-      el.style.animation = 'pop 0.6s linear forwards';
+      el.style.animation = 'pop 0.1s linear forwards';
       el.style.pointerEvents = 'none';
       el.addEventListener('animationend', () => { 
         removeBall(el);
@@ -109,14 +115,17 @@ const PlayPage = () => {
       setTargetBallIndex(newTargetIndex);
 
       if (ballsCharacter.length === newTargetIndex) {
-        // show level is cleared...and button "Click to continue"
-        setGameLevel((prev) => prev + 1);
-        setBallsCharacter([]); // reset play-area-container children
+        const newLevel = gameLevel + 1;
+        setLives(prev => [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120].includes(newLevel) ? prev + 1 : prev);
+        playSound('levelup');
+        setGameLevel(newLevel);
+        setBallsCharacter([]); 
       }
     } else {
-        el.style.animation = 'shake 2.6s linear';
+        playSound('losealife');
+        el.style.animation = 'shake 0.5s linear';
         const correctBall = ballRefs.current[clickedBall.ballId];
-        correctBall.style.animation = 'wrong-guess 2s linear';
+        correctBall.style.animation = 'wrong-guess 0.5s linear';
         const child = correctBall.firstElementChild as HTMLElement | null;
         if (!child) return;
 
@@ -125,16 +134,13 @@ const PlayPage = () => {
       const livesLeft = lives - 1;
       setLives(livesLeft);
       if (livesLeft === 0) {
-        console.log('game over!')
+        playSound('gameover');
         setIsGameOver(true);
       } else {
-        // setLives(livesLeft);
         setIsGameOver(false);
       }
     }
   }
-
-  console.log('balls character = ', ballsCharacter)
 
   function removeBall(el: HTMLElement | null) {
     if (!el) return;
@@ -151,7 +157,6 @@ const PlayPage = () => {
     nav('/play');
   }
   
-  console.log('game over = ', isGameOver)
   return (
     <div className={`play-page-container ${mode}`}>
       <div className='play-page-hud-container'>
@@ -164,17 +169,17 @@ const PlayPage = () => {
             <span className='instruction-ball-order'>{isAscending ? 'ASCENDING' : 'DESCENDING'}</span>
             <span className='instruction-post'>&nbsp;order!</span>
         </div>
-        <div className='play-page-level-lives-container'>
+        <div className='play-page-level-timer-lives-container'>
           <div className='play-page-level'>Level: 
-            <span className={`play-page-level-value ${animateLevel ? 'emphasize' : ''}`}> {gameLevel}</span>
+            <span className={`play-page-level-value ${animateLevel ? 'emphasize-level' : ''}`}> {gameLevel}</span>
           </div>
+        {hasTimer ? <ShowTimer /> : null}
           <div className='play-page-lives'>Lives: 
-            <span className={`play-page-lives-value ${animateLives ? 'emphasize' : ''}`}> {lives}</span>
+            <span className={`play-page-lives-value ${animateLives ? 'emphasize-lives' : ''}`}> {lives}</span>
           </div>
         </div>
       </div>
       <div ref={playAreaRef} className='play-area-container'>
-        {hasTimer ? <ShowTimer /> : null}
         {ballsCharacter.map((ball,i) => 
           (
             <div
@@ -195,7 +200,7 @@ const PlayPage = () => {
               }}
                 onAnimationEnd={() => isGameOver ? removeBall(ballRefs.current[ball.ballId]) : null}>
               <div 
-                className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 || ball.ballValue === 9 || ball.ballValue === 99 ? 'six' : ''}`}
+                className={`ball-value ${[6, 9, 66, 68, 86, 99].includes(ball.ballValue) ? 'six' : ''}`}
                 style={{
                   animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
                 }}>
@@ -206,7 +211,7 @@ const PlayPage = () => {
         }
         {isGameOver ? <GameOver onRestart={resetGame}/> : null}
       </div>
-      <Button btnClass='play-btn btn' btnText='Quit' onClick={() => nav('/')} />
+      <Button btnClass='play-btn btn' btnText='Quit' onClick={quitGame} />
       <Footer />
     </div>
   )

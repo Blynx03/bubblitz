@@ -17,9 +17,6 @@ function App() {
   const [ hasTimer, setHasTimer ] = useState(false);
   const [ gameTimer, setGameTimer ] = useState<number>(0);
 
-
-
-
   const value = {
     isLightTheme, setIsLightTheme,
     gameLevel, setGameLevel,
@@ -32,7 +29,10 @@ function App() {
   }
 
   return (
-    <BrowserRouter basename="/bubblitz/">
+    // <BrowserRouter basename={import.meta.env.MODE === 'production' ? '/bubblitz/' : '/'}>
+    // <BrowserRouter basename='/bubblitz/'>
+    // <BrowserRouter basename='/'>
+    <BrowserRouter >
       <UserContext.Provider value={value}>
         <Routes >
           <Route index element={<MainPage/>} />

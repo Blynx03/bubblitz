@@ -11,7 +11,7 @@ export type LevelConfig = {
 } 
 
 export const LEVEL_CONFIG: Record<number, LevelConfig> = {
-    0: { numberOfBalls: 10, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true, vanishingValue: true },
+    0: { numberOfBalls: 10, minValue: 1, maxValue: 99, moving: true, changingSize: true, rotating: true, vanishingValue: true, timer: 45 },
     1: { numberOfBalls: 6, minValue: 1, maxValue: 20 },
     2: { numberOfBalls: 10, minValue: 1, maxValue: 20 },
     3: { numberOfBalls: 14, minValue: 1, maxValue: 30 },

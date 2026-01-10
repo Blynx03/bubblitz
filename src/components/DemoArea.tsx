@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import useContainerSize from '../hooks/useContainerSize';
 import UserContext, { type UserContextType } from '../context/UserContext';
 import generateBallCharacters from '../utilities/generateBallCharacters';
@@ -8,17 +8,24 @@ import type { BallCharacterType } from '../types/BallCharacter';
 const DemoArea = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const container = useContainerSize(containerRef);
-    const { gameLevel, setIsAscending, ballsCharacter, setBallsCharacter, ballRefs } = useContext(UserContext) as UserContextType;
+    const [ demoBalls, setDemoBalls ] = useState<BallCharacterType[]>([])
+    const { setIsAscending } = useContext(UserContext) as UserContextType;
+    const demoRefs = useRef<HTMLElement[]>([]);
 
     useEffect(() => {
-        if (!container || !containerRef) return;
-        const generatedBalls: BallCharacterType[] = generateBallCharacters(gameLevel, container, setIsAscending);
-        setBallsCharacter(generatedBalls);
-        const stopAnimation = animateContainer({container, generatedBalls, ballRefs});
+        if (!container) return;
+        if (container.width === 0 || container.height === 0) return;
+        demoRefs.current = [];
+
+        const generatedBalls: BallCharacterType[] = generateBallCharacters(0, container, setIsAscending);
+        setDemoBalls(generatedBalls);
+
+        const stopAnimation = animateContainer({container, generatedBalls, ballRefs: demoRefs});
         return () => { 
             stopAnimation();
+            demoRefs.current = [];
         };
-    }, [gameLevel, container]);
+    }, [container?.width, container?.height]);
 
     const getAnimateValue = (ball: BallCharacterType | null, changeBallSize?: boolean ) => {
         let rotateDirection = '';
@@ -31,11 +38,11 @@ const DemoArea = () => {
 
     return ( 
         <div ref={containerRef} className='demo-container'>
-            {ballsCharacter.map((ball) => 
+            {demoBalls.map((ball, i) => 
                 (
                 <div 
                     key={ball.ballId} 
-                    ref={el => { if (el) ballRefs.current[ball.ballId] = el}} 
+                    ref={el => { if (el) demoRefs.current[ball.ballId] = el}} 
                     className={'ball'} 
                     style={{ 
                         backgroundColor:`var(--ball-color${ball.ballColor})`, 
@@ -44,14 +51,14 @@ const DemoArea = () => {
                         fontSize: `${ball.ballSize}px`, 
                         left: `${ball.xStartingPosition}px`, 
                         top: `${ball.yStartingPosition}px`, 
-                        zIndex: `${ball.zIndex}`,
-                        animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize ) 
+                        zIndex: demoBalls.length - i,
+                        animation: ball.isRotating || ball.isChangingSize ? getAnimateValue(ball, ball.isChangingSize) : undefined
                     }}>
 
                     <div 
-                        className={`ball-value ${ball.ballValue === 6 || ball.ballValue === 66 || ball.ballValue === 9 || ball.ballValue === 99 ? 'six' : ''}`}
+                        className={`ball-value ${[6, 9, 66, 68, 86, 99].includes(ball.ballValue) ? 'six' : ''}`}
                         style={{
-                            animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
+                            animation: `${ball.isVanishingValue ? 'vanish 3s linear infinite' : undefined}`
                         }}
                     >{ball.ballValue}</div>
                 </div>

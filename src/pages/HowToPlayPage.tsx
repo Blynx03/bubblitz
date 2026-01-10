@@ -4,6 +4,7 @@ import ThemeMode from '../components/ThemeMode'
 import UserContext, { type UserContextType } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
+import { playSound } from '../utilities/playSound'
 
 const HowToPlayPage = () => {
     const { isLightTheme, setGameLevel, setBallsCharacter } = useContext(UserContext) as UserContextType;
@@ -11,6 +12,7 @@ const HowToPlayPage = () => {
     const nav = useNavigate();
 
     function handleClick(page:string) {
+        playSound('click');
         if (page === 'play') {
             setGameLevel(1);
             setBallsCharacter([]); // reset values
@@ -19,8 +21,7 @@ const HowToPlayPage = () => {
     }
 
     return (
-        <div className={mode}>
-        <section className="how-to-play">
+        <div className={`how-to-play ${mode}`}>
 
          {/* Header  */}
             <div className='how-to-play-header-theme-container'>
@@ -113,7 +114,6 @@ const HowToPlayPage = () => {
                 <Button btnClass='how-to-play-main-page-btn how-to-play-btns btn' btnText='Main Page' onClick={() => handleClick('')} />
                 <Button btnClass='how-to-play-play-btn how-to-play-btns btn' btnText={`Let's play!`} onClick={() => handleClick('play')}  />
             </div>
-        </section>
     
         <Footer />
     </div>
