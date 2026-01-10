@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect } from 'react'
 import Title from '../components/Title'
 import Footer from '../components/Footer'
 import DemoArea from '../components/DemoArea'
