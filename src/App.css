@@ -532,12 +532,15 @@ header {
 }
 
 .timer-container {
-  width: clamp (150px, 40vw, 300px);
+  width: clamp(60px, 10vw, 140px);
   padding: 0 10px;
   background-color: var(--accent-color);
   border: 2px solid black;
   border-radius: 10px;
   font-family: var(--font-cleaner);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   animation: glow 1s linear infinite alternate-reverse;
 }
 
@@ -592,7 +595,7 @@ header {
 }
 
 .timer {
-  font-size: clamp(1rem, 3vw, 2.4rem);
+  font-size: clamp(1.1rem, 3vw, 2.4rem);
   color: var(--warning-color);
 }
 
