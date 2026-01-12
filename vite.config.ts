@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   // base: '/',
-  base: '/bubblitz/'
+  // for gh-pages
+  base: '/bubblitz/' 
+
+  // for simplifying local and gh-pages access
   // base: process.env.NODE_ENV === 'production' ? '/bubblitz/' : '/',
 
 });

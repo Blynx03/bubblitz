@@ -5,6 +5,7 @@ import tick from '../assets/sound/tick.wav'
 import gameover from '../assets/sound/gameover.wav'
 import levelup from '../assets/sound/levelup.wav'
 import losealife from '../assets/sound/losealife.wav'
+import extralife from '../assets/sound/extralife.wav'
 
 
 const sounds = {
@@ -15,6 +16,7 @@ const sounds = {
     gameover: new Audio(gameover),
     levelup: new Audio(levelup),
     losealife: new Audio(losealife),
+    extralife: new Audio(extralife)
 };
 
 export type SoundKey = keyof typeof sounds;

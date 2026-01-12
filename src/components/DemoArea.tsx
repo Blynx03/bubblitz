@@ -33,7 +33,7 @@ const DemoArea = () => {
             rotateDirection = `${ball.rotate?.rotateClockwise ? 'rotate-cw' : 'rotate-ccw'}`
         }
         return (`${rotateDirection} linear 3s infinite
-                 ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
+                 ${changeBallSize ? `, change-ball-size linear ${ball?.sizeChange?.sizeChangeSpeed}s infinite` : ''}`
         )}      
 
     return ( 
@@ -56,9 +56,9 @@ const DemoArea = () => {
                     }}>
 
                     <div 
-                        className={`ball-value ${[6, 9, 66, 68, 86, 99].includes(ball.ballValue) ? 'six' : ''}`}
+                        className={`ball-value ${[6, 9, 66, 68, 86, 89, 98, 99].includes(ball.ballValue) ? 'six' : ''}`}
                         style={{
-                            animation: `${ball.isVanishingValue ? 'vanish 3s linear infinite' : undefined}`
+                            animation: `${ball.isVanishingValue ? `vanish ${ball.vanishingSpeed}s linear infinite` : undefined}`
                         }}
                     >{ball.ballValue}</div>
                 </div>

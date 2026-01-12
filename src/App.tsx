@@ -30,8 +30,12 @@ function App() {
 
   return (
     // <BrowserRouter basename={import.meta.env.MODE === 'production' ? '/bubblitz/' : '/'}>
+
+    // for gh-pages
     <BrowserRouter basename='/bubblitz/'>
     {/* <BrowserRouter basename='/'> */}
+
+    {/* // for local access  */}
     {/* <BrowserRouter > */}
       <UserContext.Provider value={value}>
         <Routes >

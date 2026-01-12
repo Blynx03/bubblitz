@@ -94,8 +94,9 @@ const PlayPage = () => {
     if (ball) {
       rotateDirection = `${ball.rotate?.rotateClockwise ? 'rotate-cw' : 'rotate-ccw'}`
     }
+
     return (`${rotateDirection} linear 3s infinite 
-            ${changeBallSize ? ', change-ball-size linear 3s infinite' : ''}`
+            ${changeBallSize ? `, change-ball-size linear ${ball?.sizeChange?.sizeChangeSpeed}s infinite` : ''}`
     )}      
 
   // Game Logic
@@ -104,8 +105,9 @@ const PlayPage = () => {
     if (!el) return;
     playSound('choice')
     if ( ballsCharacter[targetBallIndex].ballValue === clickedBall.ballValue) {
+      // correct chosen ball
       const newTargetIndex = targetBallIndex + 1;
-      el.style.animation = 'pop 0.1s linear forwards';
+      el.style.animation = 'pop 50ms linear forwards';
       el.style.pointerEvents = 'none';
       el.addEventListener('animationend', () => { 
         removeBall(el);
@@ -115,21 +117,26 @@ const PlayPage = () => {
       setTargetBallIndex(newTargetIndex);
 
       if (ballsCharacter.length === newTargetIndex) {
+        // after last correct ball is selected
         const newLevel = gameLevel + 1;
-        setLives(prev => [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120].includes(newLevel) ? prev + 1 : prev);
+        if ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120].includes(newLevel)) {
+          setLives(prev => [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120].includes(newLevel) ? prev + 1 : prev);
+          playSound('extralife');
+        }
         playSound('levelup');
         setGameLevel(newLevel);
         setBallsCharacter([]); 
       }
     } else {
+      // wrong chosen ball
         playSound('losealife');
-        el.style.animation = 'shake 0.5s linear';
+        el.style.animation = 'shake 0.2s linear';
         const correctBall = ballRefs.current[clickedBall.ballId];
-        correctBall.style.animation = 'wrong-guess 0.5s linear';
+        correctBall.style.animation = 'change-background-color 0.2s linear';
         const child = correctBall.firstElementChild as HTMLElement | null;
         if (!child) return;
 
-        child.style.animation = 'change-color 2s linear';
+        child.style.animation = 'shake 0.1s linear';
 
       const livesLeft = lives - 1;
       setLives(livesLeft);
@@ -196,13 +203,13 @@ const PlayPage = () => {
                 left: `${ball.xStartingPosition}px`,
                 top: `${ball.yStartingPosition}px`,
                 zIndex: ballsCharacter.length - i,
-                animation: getAnimateValue(ball.isRotating ? ball : null, ball.isChangingSize )
+                animation: ball.isRotating || ball.isChangingSize ? getAnimateValue(ball, ball.isChangingSize) : undefined
               }}
                 onAnimationEnd={() => isGameOver ? removeBall(ballRefs.current[ball.ballId]) : null}>
               <div 
-                className={`ball-value ${[6, 9, 66, 68, 86, 99].includes(ball.ballValue) ? 'six' : ''}`}
+                className={`ball-value ${[6, 9, 66, 68, 86, 89, 98, 99].includes(ball.ballValue) ? 'six' : ''}`}
                 style={{
-                  animation: `${ball.isVanishingValue ? 'vanish 5s linear infinite' : ''}`
+                  animation: `${ball.isVanishingValue ? `vanish ${ball.vanishingSpeed}s linear infinite` : ''}`
                 }}>
               {ball.ballValue}
               </div>

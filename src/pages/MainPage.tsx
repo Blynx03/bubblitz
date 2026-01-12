@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import Title from '../components/Title'
 import Footer from '../components/Footer'
 import DemoArea from '../components/DemoArea'
@@ -26,15 +26,12 @@ const MainPage = () => {
         playSound('click');
         if (page === 'play') {
             // reset values
+            playSound('intro');
             hardResetGame();
         }
         nav(`/${page}`);
 
     }
-
-    useEffect(() => {
-        playSound('intro');
-    },[]);
 
     return (
         <div className={`main-page-container ${mode}`}>

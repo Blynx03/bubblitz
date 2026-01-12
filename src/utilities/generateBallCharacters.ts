@@ -36,7 +36,7 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
     const generatedBalls = ballArray.map((_,i) => {
         const movingPart: MovingType = LEVEL_CONFIG[level].moving 
             ? movingQ[i]
-                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 2), xDirection: xDir, yDirection: yDir}}
+                ? { isMoving: true as const, move: { moveSpeed: getRandomValue(0, 3), xDirection: xDir, yDirection: yDir}}
                 : { isMoving: false as const, move: { moveSpeed: 0, xDirection: xDir, yDirection: yDir} }
             : { isMoving: false as const, move: { moveSpeed: 0, xDirection: xDir, yDirection: yDir } }
         
@@ -54,12 +54,12 @@ const generateBallCharacters = (level: number, container: ContainerRectType, set
 
         const vanishingPart: VanishingValueType = LEVEL_CONFIG[level].vanishingValue
             ? vanishingQ[i]
-                ? { isVanishingValue: true as const, vanishingSpeed: getRandomValue(0, 8) }
+                ? { isVanishingValue: true as const, vanishingSpeed: getRandomValue(0, 6) }
                 : { isVanishingValue: false as const }  
             : { isVanishingValue: false as const }  
 
         // *** GET SCREEN SIZE WIDTH AND PLAY WITH THE MAX SIZE
-        const ballSize = getRandomValue(70, 140, 'ballSize', existingBallArray);
+        const ballSize = getRandomValue(70, 130, 'ballSize', existingBallArray);
 
         if (LEVEL_CONFIG[level].timer) {
             
