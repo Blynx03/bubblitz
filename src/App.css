@@ -726,7 +726,6 @@ header {
 @media (max-width: 400px) and (min-width: 320px) {
 
   .how-to-play {
-    /* height: calc(100% - 160px); */
     min-height: 100svh;
   }
 
@@ -736,10 +735,6 @@ header {
 
   .timer-container {
     animation: none;
-  }
-
-  .play-area-container::before, .play-area-container::after {
-
   }
 
   .play-area-container {
