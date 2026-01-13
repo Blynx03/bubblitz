@@ -4,7 +4,6 @@
   --font-tertiary: "Rubik Glitch", system-ui;
   --font-cleaner: "Slackey", sans-serif;
     /* other colors */
-  --warning-color: #f67272;
   --accent-color: #196a85;
   
   /* ball colors */
@@ -52,6 +51,8 @@
   --supplementary-color: #e5e1da;
   --primary-color: #81a2ae;
   --secondary-color: #B3C8CF;
+  --warning-color: #f67272;
+  --shadow-color: #444444;
 }
 
 .dark-mode {
@@ -60,6 +61,8 @@
   --supplementary-color: #B3C8CF;
   --primary-color: #F1F0E8;
   --secondary-color: #E5E1DA;
+  --warning-color: #d83939;
+  --shadow-color: #6e6e6e;
 }
 
 
@@ -152,6 +155,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  box-shadow: 5px 5px 10px 0px var(--shadow-color);
 }
 
 .theme-btn-container {
@@ -254,6 +258,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 @keyframes pop {
@@ -343,6 +348,8 @@ body {
   background-color: var(--primary-color);
   transition: transform 0.2s ease;
   color: var(--accent-color);
+  box-shadow: 10px 10px 10px 0px var(--shadow-color);
+  border: none;
   z-index: 5;
 }
 
@@ -367,7 +374,7 @@ body {
 }
 
 .how-to-play-header-theme-container {
-  width: clamp(320px, 70vw, 750px);
+  width: clamp(320px, 80vw, 900px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -403,14 +410,14 @@ header {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: clamp(310px, 70vw, 800px);
+  width: clamp(310px, 85vw, 900px);
   color: var(--accent-color);
   background-color: var(--secondary-color);
   gap: 20px;
   overflow: scroll;
   border: 1px solid var(--secondary-color);
   border-radius: 10px;
-  box-shadow: 0 0 20px 8px var(--accent-color);
+  box-shadow: 10px 10px 10px 0 var(--shadow-color);
   padding: 1% 3%;
 }
 
@@ -441,7 +448,7 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 .how-to-play-btns {
@@ -449,7 +456,7 @@ header {
   width: clamp(150px, 20vw, 300px);
   background-color: var(--secondary-color);
   padding: clamp(2px, 3vh, 4px) clamp(12px, 2.5vw, 20px);
-  font-size: clamp(0.9rem, 5vw, 1.8rem);
+  font-size: clamp(0.9rem, 4vw, 1.6rem);
   color: var(--accent-color);
 }
 
@@ -613,6 +620,7 @@ header {
   border-radius: 20px;
   background-color: rgba(229, 225, 218, 0.9);
   z-index: 200;
+  box-shadow: 10px 10px 10px 0 var(--shadow-color);
   animation: show-game-over 1s ease forwards;
 }
 
@@ -641,7 +649,7 @@ header {
 }
 
 /* responsiveness */
-@media screen and (max-width: 900px) {
+@media screen and (min-width: 900px) and (max-width: 1024px){
   .title {
     margin-top: 12px;
     font-size: clamp(3.3rem, 12vw, 5rem);
@@ -651,8 +659,29 @@ header {
     margin-top: 18px;
   }
 
+  .how-to-play__header-container {
+    margin-top: 30px;
+  }
+
+  .play-page-hud-container {
+    width: 80%;
+  }
+
   .play-page-instruction-container {
-    margin-top: 10px;
+    margin-top: 20px;
+  }
+
+  .play-page-level-timer-lives-container {
+    margin-top: 30px;
+  }
+
+  .play-area-container {
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .quit-btn {
+    margin-top: 50px;
   }
 }
 
