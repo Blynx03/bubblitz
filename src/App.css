@@ -110,7 +110,7 @@ body {
 }
 
 .main-title-and-theme-container {
-  width: clamp(300px, 70%, 800px);
+  width: clamp(350px, 70%, 800px);
   display: flex;
   justify-content: space-between;
 }
@@ -125,7 +125,7 @@ body {
 }
 
 .title {
-  font-size: clamp(5.5rem, 10vw, 7rem);
+  font-size: clamp(3.4rem, 10vw, 7rem);
 }
 
 .bub-title, .reg-title {
@@ -476,7 +476,7 @@ header {
 }
 
 .play-page-hud-container {
-  width: clamp(320px, 70vw, 750px);
+  width: clamp(340px, 70vw, 750px);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -724,6 +724,10 @@ header {
 }
 
 @media (max-width: 400px) and (min-width: 320px) {
+
+  .title {
+    font-size: 3.3rem;
+  }
 
   .how-to-play {
     min-height: 100svh;
